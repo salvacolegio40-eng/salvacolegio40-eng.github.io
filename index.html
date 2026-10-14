@@ -4,1779 +4,711 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BloxLab Academia</title>
-<meta name="description" content="Aprende a crear juegos de Roblox con inteligencia artificial y consigue plantillas listas para publicar.">
+<meta name="description" content="Aprende a crear juegos de Roblox con IA y consigue plantillas listas para publicar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;700;800&family=JetBrains+Mono:wght@500&display=swap">
 <style>
-/* BloxLab Academia — estilos compartidos
-   Layout: estudio de bloques. Cabeceras con fondo 3D animado; debajo, tarjetas con borde grueso
-   y sombra desplazada, como piezas apiladas en Roblox Studio. */
+/* ===================== 1. COLORES Y FUENTES ===================== */
 :root {
-  --bg: #eef3fb;
-  --paper: #ffffff;
-  --paper-2: #f6f8fd;
-  --ink: #141a2e;
-  --muted: #56607a;
-  --blue: #2d5bff;
-  --red: #ff4b3e;
-  --yellow: #ffd23f;
-  --green: #18b46b;
-  --purple: #8f5bff;
-  --line: #141a2e;
-  --grid: rgba(45, 91, 255, .07);
-  --code-bg: #141a2e;
-  --code-fg: #e6ebff;
-  --on-color: #141a2e;
-  --font-display: "Bungee", "Impact", system-ui, sans-serif;
-  --font-body: "Nunito", "Segoe UI", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Consolas", monospace;
-  --shadow: 5px 5px 0 var(--line);
-  --shadow-lg: 8px 8px 0 var(--line);
-  color-scheme: light;
+  --bg: #f3f6fd; --paper: #fff; --ink: #131a2f; --muted: #5a6480; --line: #131a2f;
+  --blue: #2d5bff; --red: #ff4b3e; --yellow: #ffd23f; --green: #18b46b; --purple: #8f5bff;
+  --display: "Bungee", Impact, sans-serif; --body: "Nunito", "Segoe UI", sans-serif; --mono: "JetBrains Mono", Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f1424; --paper: #1a2138; --paper-2: #212a46; --ink: #eef2ff; --muted: #a3acc8;
-    --blue: #5b80ff; --red: #ff6a5e; --green: #2fd287; --purple: #a682ff; --line: #000000;
-    --grid: rgba(91, 128, 255, .08); --code-bg: #0a0e1a; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0f1424; --paper: #1a2138; --paper-2: #212a46; --ink: #eef2ff; --muted: #a3acc8;
-  --blue: #5b80ff; --red: #ff6a5e; --green: #2fd287; --purple: #a682ff; --line: #000000;
-  --grid: rgba(91, 128, 255, .08); --code-bg: #0a0e1a; color-scheme: dark;
+  :root { --bg: #0e1323; --paper: #19203a; --ink: #eef2ff; --muted: #a3acc8; --line: #000; --blue: #5b80ff; color-scheme: dark; }
 }
 
+/* ===================== 2. BASE ===================== */
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background-color: var(--bg);
-  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 32px 32px;
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.6;
-  padding-inline: 16px;
-  overflow-x: hidden;
-}
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--body); padding-inline: 16px; overflow-x: hidden; }
 img { max-width: 100%; display: block; }
-.wrap { max-width: 1160px; margin: 0 auto; }
-h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; line-height: 1.1; text-wrap: balance; margin: 0; }
-h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
-h3 { font-size: 1.2rem; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.1; margin: 0; text-wrap: balance; }
+h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); }
 p { margin: 0; }
 a { color: inherit; }
-:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+.wrap { max-width: 1140px; margin: 0 auto; }
 .muted { color: var(--muted); }
-.eyebrow { display: inline-block; font: 800 .78rem var(--font-body); letter-spacing: .09em; text-transform: uppercase;
-  background: var(--paper); color: var(--ink); border: 2px solid var(--line); padding: 4px 10px; border-radius: 4px;
-  width: fit-content; justify-self: start; }
+.tag { display: inline-block; width: fit-content; font: 800 .75rem var(--body); letter-spacing: .08em; text-transform: uppercase;
+  background: var(--yellow); color: #131a2f; border: 2px solid var(--line); border-radius: 4px; padding: 2px 9px; }
 
-/* ---------- Botones y chips ---------- */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: .5em;
-  font: 800 1rem var(--font-body); padding: .8em 1.4em; border: 3px solid var(--line); border-radius: 6px;
-  background: var(--yellow); color: #141a2e; cursor: pointer; text-decoration: none; white-space: nowrap;
-  box-shadow: 4px 4px 0 var(--line); transition: transform .12s, box-shadow .12s, background .15s;
-}
+/* Botones y tarjetas con sombra "de bloque" */
+.btn { display: inline-flex; align-items: center; gap: .4em; font: 800 1rem var(--body); padding: .75em 1.3em; cursor: pointer;
+  border: 3px solid var(--line); border-radius: 6px; background: var(--yellow); color: #131a2f; text-decoration: none;
+  box-shadow: 4px 4px 0 var(--line); transition: transform .12s, box-shadow .12s; }
 .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--line); }
 .btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--line); }
 .btn.blue { background: var(--blue); color: #fff; }
-.btn.red { background: var(--red); color: #fff; }
-.btn.ghost { background: var(--paper); color: var(--ink); }
-.btn.small { padding: .45em 1em; font-size: .9rem; box-shadow: 3px 3px 0 var(--line); }
-.btn.added { background: var(--green); color: #fff; }
-.btn[disabled] { opacity: .5; cursor: not-allowed; }
-.chip { font: 700 .9rem var(--font-body); border: 2px solid var(--line); background: var(--paper); color: var(--ink);
-  border-radius: 999px; padding: 5px 14px; cursor: pointer; }
+.btn.white { background: var(--paper); color: var(--ink); }
+.btn.sm { padding: .4em .9em; font-size: .9rem; box-shadow: 3px 3px 0 var(--line); }
+.btn.on { background: var(--green); color: #fff; }
+.card { background: var(--paper); border: 3px solid var(--line); border-radius: 10px; box-shadow: 6px 6px 0 var(--line); overflow: hidden; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 700 .9rem var(--body); border: 2px solid var(--line); border-radius: 99px; padding: 4px 14px; background: var(--paper); color: var(--ink); cursor: pointer; }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
-.chips { display: flex; gap: 8px; flex-wrap: wrap; }
 
-/* ---------- Navegación ---------- */
-.site-nav {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
-  margin-inline: -16px; padding: 10px 16px;
-  background: var(--bg); border-bottom: 3px solid var(--line);
-}
-.site-nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 1.3rem; text-decoration: none; }
-.logo-mark { width: 32px; height: 32px; background: var(--red); border: 3px solid var(--line); transform: rotate(12deg); display: grid; place-items: center; flex: none; }
-.logo-mark::after { content: ""; width: 9px; height: 9px; background: #fff; border: 2px solid var(--line); }
-.nav-links { display: flex; gap: 6px; font-weight: 800; }
-.nav-links a { text-decoration: none; padding: 6px 12px; border-radius: 6px; border: 2px solid transparent; }
-.nav-links a:hover { border-color: var(--line); }
-.nav-links a[aria-current="page"] { background: var(--yellow); color: #141a2e; border-color: var(--line); }
-.nav-actions { display: flex; gap: 10px; align-items: center; }
+/* ===================== 3. MENÚ ===================== */
+.nav { position: sticky; top: 0; z-index: 20; margin-inline: -16px; padding: 10px 16px; background: var(--bg); border-bottom: 3px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.logo { display: flex; align-items: center; gap: 10px; font: 1.25rem var(--display); text-decoration: none; }
+.logo i { width: 30px; height: 30px; background: var(--red); border: 3px solid var(--line); transform: rotate(12deg); display: grid; place-items: center; }
+.logo i::after { content: ""; width: 8px; height: 8px; background: #fff; border: 2px solid var(--line); }
+.links { display: flex; gap: 4px; font-weight: 800; }
+.links a { text-decoration: none; padding: 6px 12px; border-radius: 6px; border: 2px solid transparent; }
+.links a:hover { border-color: var(--line); }
+.links a.active { background: var(--yellow); color: #131a2f; border-color: var(--line); }
 .cart-btn { position: relative; }
-.cart-count {
-  position: absolute; top: -11px; right: -11px; min-width: 24px; height: 24px; padding: 0 6px;
-  background: var(--red); color: #fff; border: 2px solid var(--line); border-radius: 12px;
-  font-size: .8rem; display: grid; place-items: center; font-variant-numeric: tabular-nums;
-}
-.cart-count.bump { animation: bump .35s; }
-@keyframes bump { 50% { transform: scale(1.4); } }
+.count { position: absolute; top: -10px; right: -10px; min-width: 22px; height: 22px; border-radius: 11px; background: var(--red); color: #fff;
+  border: 2px solid var(--line); font-size: .75rem; display: grid; place-items: center; }
 .menu-btn { display: none; }
-@media (max-width: 860px) {
+@media (max-width: 820px) {
   .menu-btn { display: inline-flex; }
-  .nav-links { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column;
-    background: var(--bg); border-bottom: 3px solid var(--line); padding: 12px 16px; }
-  .nav-links.open { display: flex; }
+  .links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: var(--bg); padding: 12px 16px; border-bottom: 3px solid var(--line); }
+  .links.open { display: flex; }
 }
 
-/* ---------- Cabecera con fondo animado ---------- */
-.page-hero {
-  position: relative; margin-inline: -16px; overflow: hidden; color: #fff;
-  border-bottom: 3px solid var(--line); isolation: isolate;
-}
-.bg-layer { position: absolute; inset: 0; z-index: -2; background: #2d5bff; }
-.bg-layer canvas, .bg-layer video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.bg-layer video { opacity: 0; transition: opacity .6s; }
-.bg-layer video.ready { opacity: 1; }
-.page-hero::after { content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(90deg, rgba(10, 14, 30, .78) 0%, rgba(10, 14, 30, .45) 55%, rgba(10, 14, 30, .1) 100%); }
-.page-hero .wrap { position: relative; padding: 72px 16px 64px; }
-.page-hero h1 { font-size: clamp(2.3rem, 6vw, 4.4rem); max-width: 13em; text-shadow: 3px 3px 0 rgba(0, 0, 0, .35); }
-.page-hero.compact .wrap { padding-block: 56px 48px; }
-.page-hero.compact h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
-.page-hero .lead { font-size: 1.15rem; max-width: 36em; margin-top: 18px; color: #e6ebff; }
-.page-hero .eyebrow { margin-bottom: 18px; }
-.hl-y { background: var(--yellow); color: #141a2e; padding: 0 .15em; text-shadow: none; }
-.hl-b { color: #8fb0ff; }
-.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
-.video-note { position: absolute; right: 16px; bottom: 12px; font: 600 .72rem var(--font-mono); color: rgba(255, 255, 255, .75);
-  background: rgba(0, 0, 0, .35); padding: 3px 8px; border-radius: 4px; }
-.hero-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 36px; }
-.hero-stats b { font-family: var(--font-display); font-size: 1.8rem; display: block; font-weight: 400; font-variant-numeric: tabular-nums; }
-.hero-stats span { color: #c9d2f0; font-size: .9rem; }
+/* ===================== 4. CABECERA ANIMADA (solo CSS: va fluida) ===================== */
+.hero { position: relative; overflow: hidden; margin-inline: -16px; padding: 64px 16px 0; color: #fff;
+  background: linear-gradient(180deg, var(--sky1, #3d7bff), var(--sky2, #9fd0ff)); border-bottom: 3px solid var(--line); }
+.hero.sunset { --sky1: #ff7a59; --sky2: #ffc48a; }
+.hero.night { --sky1: #120c2c; --sky2: #3d2a73; }
+.hero.purple { --sky1: #5b2bd9; --sky2: #b18cff; }
+.hero.green { --sky1: #12945a; --sky2: #7fe0a8; }
+.hero .wrap { position: relative; z-index: 2; display: grid; grid-template-columns: 1.1fr .9fr; gap: 32px; align-items: center; padding-bottom: 56px; }
+.hero .wrap > * { min-width: 0; }
+.hero h1 { font-size: clamp(2.2rem, 5.5vw, 4rem); text-shadow: 3px 3px 0 rgba(0,0,0,.25); }
+.hero .lead { font-size: 1.12rem; max-width: 34em; margin: 16px 0 26px; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,.45); }
+.hero .hl { background: var(--yellow); color: #131a2f; padding: 0 .15em; text-shadow: none; }
+.hero-art { filter: drop-shadow(8px 10px 0 rgba(0,0,0,.25)); animation: bob 6s ease-in-out infinite; }
+.stats { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 30px; }
+.stats b { font: 1.7rem var(--display); display: block; }
+.stats span { font-size: .9rem; opacity: .9; }
+.hero.small .wrap { grid-template-columns: 1fr; padding-bottom: 48px; }
+.hero.small h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+/* nubes y bloques flotantes: solo se mueven con transform, que no hace trabajar al ordenador */
+.cloud { position: absolute; z-index: 1; width: 120px; height: 28px; background: #fff; opacity: .35; animation: drift linear infinite; }
+.cloud::before { content: ""; position: absolute; left: 24px; top: -24px; width: 60px; height: 24px; background: inherit; }
+.cube { position: absolute; z-index: 1; width: 22px; height: 22px; border: 3px solid var(--line); animation: float 7s ease-in-out infinite; }
+.ground { position: relative; z-index: 2; height: 34px; border-top: 3px solid var(--line);
+  background: linear-gradient(#5cc65a 0 12px, #9b6a3f 12px) 0 0 / 100% 100%; }
+.ground::after { content: ""; position: absolute; inset: 0 0 auto; height: 12px; background: repeating-linear-gradient(90deg, transparent 0 32px, rgba(0,0,0,.12) 32px 34px); }
+@keyframes drift { from { transform: translateX(-200px); } to { transform: translateX(110vw); } }
+@keyframes float { 50% { transform: translateY(-18px) rotate(45deg); } }
+@keyframes bob { 50% { transform: translateY(-12px); } }
 
-/* ---------- Secciones ---------- */
-section.block { padding-block: 64px; }
-.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
-.sec-head > div { display: grid; gap: 10px; max-width: 40em; }
-.sec-head p { color: var(--muted); }
-.card { background: var(--paper); border: 3px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-.grid-2 > *, .grid-3 > *, .grid-4 > * { min-width: 0; }
+/* ===================== 5. SECCIONES ===================== */
+section.block { padding-block: 60px; }
+.head { display: flex; justify-content: space-between; align-items: end; gap: 18px; flex-wrap: wrap; margin-bottom: 28px; }
+.head > div { display: grid; gap: 8px; max-width: 40em; }
+.grid { display: grid; gap: 24px; grid-template-columns: repeat(var(--cols, 3), 1fr); }
+.grid > * { min-width: 0; }
+.pic { aspect-ratio: 16 / 10; width: 100%; object-fit: cover; border-bottom: 3px solid var(--line); background: #9fd0ff; }
+.body { padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.item { display: flex; flex-direction: column; transition: transform .15s; }
+.item:hover { transform: translateY(-4px); }
+.foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding-top: 6px; }
+.price { font: 1.6rem var(--display); }
+.price s { font: 700 .95rem var(--body); color: var(--muted); margin-left: 6px; }
+.meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: .85rem; font-weight: 800; color: var(--muted); }
+.ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.ticks li { padding-left: 24px; position: relative; }
+.ticks li::before { content: ""; position: absolute; left: 0; top: .45em; width: 11px; height: 11px; background: var(--green); border: 2px solid var(--line); }
+.step b { font: 2rem var(--display); color: var(--red); }
+.quote .who { display: flex; gap: 12px; align-items: center; margin-top: auto; }
+.avatar { width: 44px; height: 44px; border: 3px solid var(--line); display: grid; place-items: center; font-family: var(--display); color: #fff; }
+.band { background: var(--red); color: #fff; padding: 36px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
 
-/* Producto destacado (inicio) */
-.offer { display: grid; grid-template-rows: auto 1fr; overflow: hidden; }
-.offer .pic { border-bottom: 3px solid var(--line); aspect-ratio: 16 / 10; overflow: hidden; }
-.offer .pic img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-.offer:hover .pic img { transform: scale(1.05); }
-.offer .body { padding: 26px; display: flex; flex-direction: column; gap: 14px; }
-.offer h3 { font-size: 1.6rem; }
-.offer .foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.price { font-family: var(--font-display); font-size: 1.7rem; font-variant-numeric: tabular-nums; }
-.price s { font-family: var(--font-body); font-size: .95rem; color: var(--muted); margin-left: 6px; }
-.ticks { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.ticks li { padding-left: 26px; position: relative; }
-.ticks li::before { content: ""; position: absolute; left: 0; top: .45em; width: 12px; height: 12px; background: var(--green); border: 2px solid var(--line); }
+/* Demo de IA */
+.term-bar { background: var(--blue); color: #fff; padding: 10px 14px; font-weight: 800; border-bottom: 3px solid var(--line); }
+pre.code { margin: 0 14px 14px; background: #131a2f; color: #e6ebff; font: .82rem/1.55 var(--mono); padding: 14px; border-radius: 6px; min-height: 200px; overflow-x: auto; }
+.k { color: #ff8a80; } .s { color: #ffd23f; } .c { color: #7d89b0; }
 
-/* Pasos */
-.step { padding: 22px; }
-.step .n { font-family: var(--font-display); font-size: 2rem; color: var(--red); }
-.step h3 { margin: 6px 0 8px; font-size: 1.1rem; }
-.step p { color: var(--muted); font-size: .95rem; }
+/* Curso */
+.course-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px; align-items: start; }
+.course-grid > * { min-width: 0; }
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; }
+.facts div { padding: 14px 6px; border-left: 3px solid var(--line); }
+.facts div:first-child { border-left: 0; }
+.facts b { font: 1.5rem var(--display); display: block; }
+.timer { display: flex; gap: 8px; }
+.timer span { background: var(--ink); color: var(--bg); border-radius: 6px; padding: 6px 0; width: 58px; text-align: center; font-size: .7rem; text-transform: uppercase; }
+.timer b { display: block; font: 1.3rem var(--display); }
+details.acc { background: var(--paper); border: 3px solid var(--line); border-radius: 10px; }
+details.acc + details.acc { margin-top: 10px; }
+details.acc summary { cursor: pointer; padding: 14px 18px; font-weight: 800; list-style: none; display: flex; gap: 14px; align-items: center; }
+details.acc summary::-webkit-details-marker { display: none; }
+details.acc summary::after { content: "+"; margin-left: auto; font: 1.3rem var(--display); color: var(--red); transition: transform .2s; }
+details.acc[open] summary::after { transform: rotate(45deg); }
+details.acc .in { padding: 0 18px 16px; color: var(--muted); }
+.num { font-family: var(--display); width: 40px; height: 40px; flex: none; display: grid; place-items: center; background: var(--yellow); color: #131a2f; border: 3px solid var(--line); }
 
-/* Tira de imágenes en movimiento */
-.marquee { margin-inline: -16px; overflow: hidden; border-block: 3px solid var(--line); background: var(--ink); padding-block: 18px; }
-.marquee-track { display: flex; gap: 18px; width: max-content; animation: slide 40s linear infinite; }
-.marquee:hover .marquee-track { animation-play-state: paused; }
-.marquee img { width: 280px; height: 175px; object-fit: cover; border: 3px solid var(--line); border-radius: 6px; }
-@keyframes slide { to { transform: translateX(-50%); } }
+/* Plantillas */
+.meter { padding: 18px 22px; display: grid; gap: 8px; margin-bottom: 26px; }
+.bar { height: 12px; border: 3px solid var(--line); border-radius: 99px; overflow: hidden; }
+.bar div { height: 100%; width: 0; background: var(--green); transition: width .3s; }
+.mega { display: grid; grid-template-columns: 1fr 1fr; background: var(--purple); color: #fff; }
+.mega > div { padding: 32px; display: grid; gap: 14px; align-content: center; }
+.mega .collage { padding: 0; grid-template-columns: repeat(3, 1fr); gap: 0; border-left: 3px solid var(--line); }
+.mega .collage img { aspect-ratio: 1; object-fit: cover; width: 100%; }
 
-/* Testimonios */
-.quote { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-.who { display: flex; align-items: center; gap: 12px; margin-top: auto; }
-.avatar { width: 46px; height: 46px; border: 3px solid var(--line); display: grid; place-items: center; font-family: var(--font-display); color: #fff; flex: none; }
-.who small { display: block; color: var(--muted); }
-.stars { color: #e0a800; letter-spacing: 2px; }
+/* Galería */
+.like { font: 800 .85rem var(--body); border: 2px solid var(--line); border-radius: 99px; padding: 2px 10px; background: var(--paper); color: var(--ink); cursor: pointer; }
+.like[aria-pressed="true"] { background: var(--red); color: #fff; }
 
-/* Banda CTA */
-.cta-band { background: var(--red); color: #fff; border: 3px solid var(--line); border-radius: 10px; box-shadow: var(--shadow-lg);
-  padding: 40px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; }
-.cta-band > * { min-width: 0; }
-.cta-band p { margin-top: 12px; }
-.cta-band .actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
+/* Formulario */
+.form { padding: 26px; display: grid; gap: 12px; }
+.form label { font-weight: 800; font-size: .9rem; }
+.form input, .form select, .form textarea { width: 100%; font: 700 1rem var(--body); padding: 10px 12px; border: 3px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--ink); }
+.ok { background: var(--yellow); color: #131a2f; border: 3px solid var(--line); border-radius: 6px; padding: 10px 14px; font-weight: 800; }
+.err { color: var(--red); font-weight: 800; }
 
-/* ---------- Curso ---------- */
-.course-top { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: start; margin-top: -40px; position: relative; z-index: 2; }
-.course-top > * { min-width: 0; }
-.player { overflow: hidden; background: #000; }
-.player-screen { position: relative; aspect-ratio: 16 / 9; background: #0b0f1d; }
-.player-screen canvas { width: 100%; height: 100%; display: block; }
-.player-caption { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); width: max-content; max-width: 90%;
-  background: rgba(10, 14, 30, .82); color: #fff; padding: 8px 14px; border-radius: 6px; font-weight: 700; text-align: center; }
-.player-title { position: absolute; left: 16px; top: 14px; color: #fff; font-family: var(--font-display); font-size: 1rem; text-shadow: 2px 2px 0 #000; }
-.player-big { position: absolute; inset: 0; margin: auto; width: 84px; height: 84px; border-radius: 50%; border: 4px solid var(--line);
-  background: var(--yellow); cursor: pointer; display: grid; place-items: center; box-shadow: 5px 5px 0 var(--line); }
-.player-big::before { content: ""; border-left: 26px solid #141a2e; border-top: 16px solid transparent; border-bottom: 16px solid transparent; margin-left: 8px; }
-.player-bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--ink); color: var(--bg); border-top: 3px solid var(--line); }
-.player-bar button { background: none; border: 0; color: inherit; font: 800 .9rem var(--font-body); cursor: pointer; padding: 2px 6px; }
-.player-bar input[type="range"] { flex: 1; accent-color: var(--yellow); min-width: 0; }
-.player-bar time { font: 600 .82rem var(--font-mono); font-variant-numeric: tabular-nums; }
-.buy-card { padding: 26px; display: grid; gap: 16px; position: sticky; top: 90px; }
-.buy-card .price { font-size: 2.6rem; }
-.countdown { display: flex; gap: 8px; }
-.countdown div { background: var(--ink); color: var(--bg); border-radius: 6px; padding: 6px 10px; text-align: center; min-width: 56px; }
-.countdown b { display: block; font: 400 1.3rem var(--font-display); font-variant-numeric: tabular-nums; }
-.countdown small { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; }
-.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
-.facts div { padding: 18px; border-right: 3px solid var(--line); }
-.facts div:last-child { border-right: 0; }
-.facts b { font-family: var(--font-display); font-size: 1.6rem; display: block; font-weight: 400; font-variant-numeric: tabular-nums; }
-.facts span { color: var(--muted); font-size: .9rem; }
-
-.modules { display: grid; gap: 12px; }
-.module { background: var(--paper); border: 3px solid var(--line); border-radius: 8px; }
-.module summary { cursor: pointer; padding: 16px 20px; list-style: none; display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; }
-.module summary::-webkit-details-marker { display: none; }
-.module .mn { font-family: var(--font-display); width: 44px; height: 44px; display: grid; place-items: center; border: 3px solid var(--line); background: var(--yellow); color: #141a2e; }
-.module h3 { font-size: 1.05rem; }
-.module summary small { color: var(--muted); font-weight: 700; }
-.module .tog { font-family: var(--font-display); color: var(--red); font-size: 1.4rem; transition: transform .2s; }
-.module[open] .tog { transform: rotate(45deg); }
-.module ol { margin: 0; padding: 0 20px 18px 80px; display: grid; gap: 6px; color: var(--muted); }
-.module li span { font: 600 .8rem var(--font-mono); margin-left: 8px; color: var(--blue); }
-.progress-line { height: 12px; border: 3px solid var(--line); border-radius: 999px; background: var(--paper); overflow: hidden; }
-.progress-line div { height: 100%; background: var(--green); width: 0; transition: width .3s; }
-
-.build { overflow: hidden; }
-.build img { aspect-ratio: 16 / 10; object-fit: cover; width: 100%; border-bottom: 3px solid var(--line); }
-.build .body { padding: 18px; display: grid; gap: 6px; }
-.instructor { display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: center; padding: 26px; }
-.instructor img { border: 3px solid var(--line); border-radius: 8px; aspect-ratio: 1; object-fit: cover; }
-
-/* Terminal de prompts */
-.ai-demo { overflow: hidden; }
-.ai-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 3px solid var(--line); background: var(--blue); color: #fff; font-weight: 800; font-size: .9rem; }
-.ai-bar i { width: 12px; height: 12px; border: 2px solid var(--line); background: var(--yellow); display: inline-block; }
-.ai-bar i:first-child { background: var(--red); }
-.ai-bar i:nth-child(3) { background: var(--green); }
-.ai-demo .chips { padding: 14px 14px 0; }
-.prompt-line { margin: 14px; padding: 10px 12px; border: 2px dashed var(--muted); border-radius: 6px; }
-.prompt-line b { color: var(--blue); }
-pre.code { margin: 0 14px 14px; background: var(--code-bg); color: var(--code-fg); font: .82rem/1.55 var(--font-mono);
-  padding: 14px; border-radius: 6px; min-height: 230px; overflow-x: auto; white-space: pre; }
-.code .k { color: #ff8a80; } .code .s { color: #ffd23f; } .code .c { color: #7d89b0; } .code .f { color: #7fb0ff; }
-.caret { display: inline-block; width: 8px; height: 1em; background: var(--yellow); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: 0; } }
-
-/* ---------- Plantillas ---------- */
-.toolbar { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 26px; }
-.select { font: 700 .95rem var(--font-body); border: 2px solid var(--line); border-radius: 6px; padding: 7px 10px; background: var(--paper); color: var(--ink); }
-.packs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-.pack { display: flex; flex-direction: column; overflow: hidden; transition: transform .15s; }
-.pack:hover { transform: translateY(-4px) rotate(-.4deg); }
-.pack .pic { position: relative; border-bottom: 3px solid var(--line); aspect-ratio: 16 / 10; overflow: hidden; cursor: zoom-in; background: var(--paper-2); }
-.pack .pic img { width: 100%; height: 100%; object-fit: cover; }
-.pack .genre { position: absolute; left: 12px; top: 12px; }
-.pack .ribbon { position: absolute; right: 12px; top: 12px; background: var(--red); color: #fff; border: 2px solid var(--line); font-weight: 800; font-size: .75rem; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .05em; }
-.pack .body { padding: 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-.pack .meta { display: flex; gap: 12px; flex-wrap: wrap; font-size: .85rem; color: var(--muted); font-weight: 700; }
-.pack .foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 8px; }
-.tag { display: inline-block; font-size: .78rem; font-weight: 800; border: 2px solid var(--line); border-radius: 4px; padding: 1px 8px; background: var(--yellow); color: #141a2e; }
-.mega { display: grid; grid-template-columns: 1fr 1.1fr; overflow: hidden; background: var(--purple); color: #fff; }
-.mega > * { min-width: 0; }
-.mega .body { padding: 32px; display: grid; gap: 14px; align-content: center; }
-.mega .collage { display: grid; grid-template-columns: repeat(3, 1fr); border-left: 3px solid var(--line); }
-.mega .collage img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 1; border: 1.5px solid var(--line); }
-.bundle-meter { display: grid; gap: 8px; padding: 20px 24px; }
-.bundle-steps { display: flex; justify-content: space-between; font-size: .85rem; font-weight: 800; color: var(--muted); }
-.bundle-steps .on { color: var(--green); }
-.compare-wrap { overflow-x: auto; border: 3px solid var(--line); border-radius: 8px; background: var(--paper); box-shadow: var(--shadow); }
-table.compare { width: 100%; border-collapse: collapse; min-width: 640px; }
-.compare th, .compare td { padding: 12px 14px; border-bottom: 2px solid var(--line); text-align: left; }
-.compare thead th { background: var(--ink); color: var(--bg); font-family: var(--font-display); font-weight: 400; font-size: .9rem; }
-.compare td.num { font-variant-numeric: tabular-nums; }
-.compare tr:last-child td { border-bottom: 0; }
-
-/* ---------- Galería ---------- */
-.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-.shot { overflow: hidden; cursor: zoom-in; text-align: left; padding: 0; font: inherit; color: inherit; }
-.shot img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-bottom: 3px solid var(--line); transition: transform .4s; }
-.shot:hover img { transform: scale(1.04); }
-.shot .body { padding: 14px 16px; display: flex; justify-content: space-between; gap: 10px; align-items: center; }
-.shot .plays { font: 600 .82rem var(--font-mono); color: var(--blue); white-space: nowrap; }
-.shot .like { background: none; border: 2px solid var(--line); border-radius: 999px; padding: 2px 10px; cursor: pointer; font: 800 .85rem var(--font-body); color: var(--ink); }
-.shot .like[aria-pressed="true"] { background: var(--red); color: #fff; }
-
-/* ---------- Formularios ---------- */
-.form { display: grid; gap: 14px; padding: 28px; }
-.form label { font-weight: 800; font-size: .9rem; display: block; margin-bottom: 4px; }
-.form input, .form select, .form textarea {
-  width: 100%; font: 600 1rem var(--font-body); padding: 11px 13px; border: 3px solid var(--line); border-radius: 6px;
-  background: var(--paper-2); color: var(--ink); }
-.form textarea { min-height: 130px; resize: vertical; }
-.form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.form .row > * { min-width: 0; }
-.form .err { color: var(--red); font-weight: 800; font-size: .85rem; }
-.form-ok { background: var(--yellow); color: #141a2e; border: 3px solid var(--line); border-radius: 6px; padding: 12px 14px; font-weight: 800; }
-.contact-list { display: grid; gap: 14px; padding: 26px; }
-.contact-list div { display: grid; gap: 2px; }
-.contact-list small { text-transform: uppercase; letter-spacing: .08em; font-weight: 800; color: var(--muted); font-size: .75rem; }
-.copy { font: 700 .8rem var(--font-body); border: 2px solid var(--line); border-radius: 4px; padding: 1px 8px; background: var(--paper-2); color: var(--ink); cursor: pointer; margin-left: 8px; }
-
-/* FAQ */
-.faq { display: grid; gap: 12px; max-width: 860px; }
-.faq details { background: var(--paper); border: 3px solid var(--line); border-radius: 8px; }
-.faq summary { cursor: pointer; padding: 16px 20px; font-weight: 800; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; font-family: var(--font-display); color: var(--red); transition: transform .2s; }
-.faq details[open] summary::after { transform: rotate(45deg); }
-.faq details p { padding: 0 20px 18px; color: var(--muted); }
-
-/* ---------- Modal, carrito y toast ---------- */
-.overlay { position: fixed; inset: 0; background: rgba(10, 14, 30, .6); z-index: 40; display: grid; place-items: center; padding: 16px; }
-.modal { width: min(880px, 100%); max-height: calc(100% - 32px); overflow: auto; background: var(--paper); border: 3px solid var(--line); border-radius: 10px; box-shadow: var(--shadow-lg); }
-.modal .pic img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 3px solid var(--line); }
-.modal .body { padding: 24px; display: grid; gap: 14px; }
-.modal .close { float: right; }
-.modal .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.modal .cols > * { min-width: 0; }
-.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--paper); border-left: 3px solid var(--line);
-  z-index: 45; display: flex; flex-direction: column; transform: translateX(105%); transition: transform .25s;
-  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-.drawer.open { transform: none; }
-.drawer header { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 3px solid var(--line); }
-.drawer .items { flex: 1; overflow: auto; padding: 16px 20px; display: grid; gap: 12px; align-content: start; }
-.drawer .item { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; }
-.drawer .item img { width: 64px; height: 44px; object-fit: cover; border: 2px solid var(--line); border-radius: 4px; }
-.drawer .item b { display: block; font-size: .95rem; line-height: 1.3; }
-.drawer .item button { background: none; border: 0; color: var(--muted); cursor: pointer; font-weight: 800; }
-.drawer footer { border-top: 3px solid var(--line); padding: 18px 20px; display: grid; gap: 10px; }
-.drawer .line { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
-.drawer .total { font-family: var(--font-display); font-size: 1.4rem; }
-.drawer .discount { color: var(--green); font-weight: 800; }
-.empty { text-align: center; color: var(--muted); padding: 30px 10px; display: grid; gap: 12px; justify-items: center; }
-.scrim { position: fixed; inset: 0; background: rgba(10, 14, 30, .5); z-index: 44; }
-.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 160%);
-  background: var(--ink); color: var(--bg); padding: 12px 20px; border-radius: 6px; font-weight: 800; transition: transform .25s; z-index: 50; max-width: calc(100% - 32px); }
+/* Ventanas (dialog): detalle, galería y carrito */
+dialog { border: 3px solid var(--line); border-radius: 10px; padding: 0; background: var(--paper); color: var(--ink); width: min(820px, calc(100% - 32px)); box-shadow: 8px 8px 0 var(--line); }
+dialog::backdrop { background: rgba(10, 14, 30, .6); }
+dialog.drawer { margin: 0 0 0 auto; height: 100%; max-height: 100%; width: min(420px, 100%); border-radius: 0; border-width: 0 0 0 3px; box-shadow: none; }
+.drawer-in { display: flex; flex-direction: column; height: 100%; }
+.drawer-in header, .drawer-in footer { padding: 16px 20px; border-bottom: 3px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.drawer-in footer { border: 0; border-top: 3px solid var(--line); display: grid; }
+.lines { flex: 1; overflow: auto; padding: 16px 20px; display: grid; gap: 12px; align-content: start; }
+.line { display: grid; grid-template-columns: 60px 1fr auto; gap: 12px; align-items: center; }
+.line img { width: 60px; border: 2px solid var(--line); border-radius: 4px; }
+.row { display: flex; justify-content: space-between; }
+.toast { position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 150%); background: var(--ink); color: var(--bg); padding: 12px 20px; border-radius: 6px; font-weight: 800; transition: transform .25s; z-index: 50; }
 .toast.show { transform: translate(-50%, 0); }
 
-/* ---------- Pie ---------- */
-.site-footer { margin-top: 64px; margin-inline: -16px; background: var(--ink); color: var(--bg); padding: 48px 16px 32px; }
-.site-footer .wrap { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 28px; }
-.site-footer .wrap > * { min-width: 0; }
-.site-footer h4 { font-size: .95rem; margin-bottom: 12px; color: var(--yellow); }
-.site-footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
-.site-footer a { text-decoration: none; opacity: .85; }
-.site-footer a:hover { opacity: 1; text-decoration: underline; }
-.site-footer .legal { grid-column: 1 / -1; border-top: 2px solid rgba(255, 255, 255, .15); padding-top: 18px; font-size: .85rem; opacity: .7; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.site-footer .logo { color: var(--bg); margin-bottom: 10px; }
-.site-footer p { opacity: .75; font-size: .95rem; }
+/* Pie */
+footer.site { margin: 60px -16px 0; padding: 36px 16px; background: #131a2f; color: #eef2ff; }
+footer.site .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 960px) {
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .grid-3, .packs, .gallery { grid-template-columns: repeat(2, 1fr); }
-  .course-top, .cta-band, .mega { grid-template-columns: 1fr; }
-  .cta-band .actions { justify-content: flex-start; }
-  .mega .collage { border-left: 0; border-top: 3px solid var(--line); }
-  .buy-card { position: static; }
-  .site-footer .wrap { grid-template-columns: 1fr 1fr; }
-  .facts { grid-template-columns: repeat(2, 1fr); }
-  .facts div:nth-child(2) { border-right: 0; }
-  .facts div:nth-child(-n+2) { border-bottom: 3px solid var(--line); }
-}
-@media (max-width: 640px) {
-  .grid-2, .grid-3, .grid-4, .packs, .gallery { grid-template-columns: 1fr; }
-  .instructor, .modal .cols, .form .row { grid-template-columns: 1fr; }
-  .instructor img { max-width: 200px; }
-  .cta-band { padding: 26px; }
-  .module ol { padding-left: 40px; }
-  .site-footer .wrap { grid-template-columns: 1fr; }
-  .logo span.txt { display: none; }
-  .course-top { margin-top: 24px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  html { scroll-behavior: auto; }
-}
-
-/* Páginas dentro de un solo archivo */
+/* Páginas: solo se ve la activa */
 .page { display: none; }
 .page.active { display: block; }
 
+/* ===================== 6. MÓVIL ===================== */
+@media (max-width: 900px) {
+  .grid { --cols: 2 !important; }
+  .hero .wrap, .course-grid, .mega { grid-template-columns: 1fr; }
+  .hero-art { max-width: 420px; }
+}
+@media (max-width: 600px) {
+  .grid { --cols: 1 !important; }
+  .facts { grid-template-columns: repeat(2, 1fr); }
+  .band { padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
-<script>
-/* Dibuja en el navegador las ilustraciones isométricas de bloques. IMG('pack-obby') devuelve la URL de la imagen. */
-(function () {
-  function rng(seed) { var s = seed >>> 0; return function () { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; }; }
-  function shade(hex, f) {
-    var n = parseInt(hex.slice(1), 16);
-    return '#' + [n >> 16, (n >> 8) & 255, n & 255].map(function (v) {
-      v = Math.max(0, Math.min(255, Math.round(v * f))); return (v < 16 ? '0' : '') + v.toString(16);
-    }).join('');
-  }
-  function World() { this.m = {}; }
-  World.prototype = {
-    k: function (x, y, z) { return x + ',' + y + ',' + z; },
-    set: function (x, y, z, c) { this.m[this.k(x, y, z)] = { x: x, y: y, z: z, c: c }; },
-    has: function (x, y, z) { return this.k(x, y, z) in this.m; },
-    box: function (x0, y0, z0, x1, y1, z1, c) { for (var x = x0; x <= x1; x++) for (var y = y0; y <= y1; y++) for (var z = z0; z <= z1; z++) this.set(x, y, z, c); },
-    hollow: function (x0, y0, z0, x1, y1, z1, c) {
-      for (var x = x0; x <= x1; x++) for (var y = y0; y <= y1; y++) for (var z = z0; z <= z1; z++)
-        if (x === x0 || x === x1 || y === y0 || y === y1) this.set(x, y, z, c);
-    },
-    tree: function (x, y, z, trunk, leaf, h) {
-      trunk = trunk || '#8a5a34'; leaf = leaf || '#2fa84f'; h = h || 2;
-      for (var i = 0; i < h; i++) this.set(x, y, z + i, trunk);
-      this.box(x - 1, y - 1, z + h, x + 1, y + 1, z + h, leaf);
-      this.set(x, y, z + h + 1, leaf);
-    },
-    heightTop: function (x, y) { var t = -1; for (var z = 0; z < 40; z++) if (this.has(x, y, z)) t = z; return t; }
-  };
-
-  function render(w, o) {
-    var S = 20, H = 10, V = 22, self = w;
-    var cubes = Object.keys(w.m).map(function (k) { return w.m[k]; })
-      .sort(function (a, b) { return (a.x + a.y + a.z) - (b.x + b.y + b.z) || a.z - b.z; });
-    var minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9, polys = [];
-    function P(pts) { return pts.map(function (p) { return p[0] + ',' + p[1]; }).join(' '); }
-    cubes.forEach(function (c) {
-      var X = (c.x - c.y) * S, Y = (c.x + c.y) * H - c.z * V;
-      minX = Math.min(minX, X - S); maxX = Math.max(maxX, X + S); minY = Math.min(minY, Y); maxY = Math.max(maxY, Y + H * 2 + V);
-      if (!self.has(c.x, c.y + 1, c.z)) polys.push('<polygon points="' + P([[X - S, Y + H], [X, Y + 2 * H], [X, Y + 2 * H + V], [X - S, Y + H + V]]) + '" fill="' + shade(c.c, 0.78) + '"/>');
-      if (!self.has(c.x + 1, c.y, c.z)) polys.push('<polygon points="' + P([[X + S, Y + H], [X, Y + 2 * H], [X, Y + 2 * H + V], [X + S, Y + H + V]]) + '" fill="' + shade(c.c, 0.62) + '"/>');
-      if (!self.has(c.x, c.y, c.z + 1)) polys.push('<polygon points="' + P([[X, Y], [X + S, Y + H], [X, Y + 2 * H], [X - S, Y + H]]) + '" fill="' + c.c + '"/>');
-    });
-    var W = 800, HH = 500, bw = maxX - minX, bh = maxY - minY;
-    var sc = Math.min((W * 0.86) / bw, (HH * 0.84) / bh);
-    var tx = W / 2 - (minX + bw / 2) * sc, ty = HH / 2 - (minY + bh / 2) * sc;
-    var r = rng(o.seed || 1), deco = '', i;
-    if (o.stars) for (i = 0; i < 70; i++) deco += '<rect x="' + ((r() * W) | 0) + '" y="' + ((r() * HH * 0.7) | 0) + '" width="3" height="3" fill="#fff" opacity="' + (0.3 + r() * 0.7).toFixed(2) + '"/>';
-    if (o.clouds) for (i = 0; i < 4; i++) {
-      var cx = r() * W, cy = 30 + r() * 120, s = 16 + r() * 10;
-      deco += '<g fill="#fff" opacity=".85"><rect x="' + (cx | 0) + '" y="' + (cy | 0) + '" width="' + ((s * 5) | 0) + '" height="' + (s | 0) + '"/><rect x="' + ((cx + s) | 0) + '" y="' + ((cy - s) | 0) + '" width="' + ((s * 2.5) | 0) + '" height="' + (s | 0) + '"/></g>';
-    }
-    if (o.moon) deco += '<rect x="640" y="50" width="70" height="70" fill="' + o.moon + '"/><rect x="655" y="62" width="14" height="14" fill="' + shade(o.moon, 0.85) + '"/>';
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + HH + '" width="' + W + '" height="' + HH + '">' +
-      '<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + o.sky[0] + '"/><stop offset="1" stop-color="' + o.sky[1] + '"/></linearGradient></defs>' +
-      '<rect width="' + W + '" height="' + HH + '" fill="url(#sky)"/>' + deco +
-      '<g transform="translate(' + tx.toFixed(1) + ' ' + ty.toFixed(1) + ') scale(' + sc.toFixed(3) + ')" stroke="rgba(0,0,0,.12)" stroke-width="0.6" stroke-linejoin="round">' + polys.join('') + '</g></svg>';
-  }
-
-  function island(w, n, seed, top, side, maxH) {
-    maxH = maxH || 3; var r = rng(seed), ph = [r() * 6, r() * 6];
-    for (var x = 0; x < n; x++) for (var y = 0; y < n; y++) {
-      var dx = x - n / 2 + 0.5, dy = y - n / 2 + 0.5, d = Math.sqrt(dx * dx + dy * dy) / (n / 2);
-      if (d > 1.02) continue;
-      var h = Math.max(0, Math.round((1 - d) * maxH + Math.sin(x * 0.7 + ph[0]) * 0.7 + Math.cos(y * 0.6 + ph[1]) * 0.7));
-      for (var z = 0; z <= h; z++) w.set(x, y, z, z === h ? top : side);
-    }
-  }
-  function avatar(w, ox, oy, oz, shirt) {
-    w.box(ox, oy, oz, ox + 1, oy + 1, oz + 2, '#18b46b');
-    w.box(ox, oy, oz + 3, ox + 1, oy + 1, oz + 5, shirt || '#2d5bff');
-    w.box(ox - 1, oy, oz + 3, ox - 1, oy + 1, oz + 5, '#ffd23f');
-    w.box(ox + 2, oy, oz + 3, ox + 2, oy + 1, oz + 5, '#ffd23f');
-    w.box(ox, oy, oz + 6, ox + 1, oy + 1, oz + 7, '#ffd23f');
-    w.set(ox + 1, oy + 1, oz + 7, '#141a2e'); w.set(ox, oy + 1, oz + 7, '#141a2e');
-  }
-
-  var G = '#5cc65a', DIRT = '#9b6a3f', S = {};
-  S['pack-obby'] = function () {
-    var w = new World(); w.box(0, 0, 0, 13, 13, 0, '#ff5a1f');
-    var cols = ['#2d5bff', '#ffd23f', '#18b46b', '#ff4b9a', '#8f5bff'], x = 1, y = 11, z = 1;
-    for (var i = 0; i < 11; i++) { w.box(x, y, z, x + 1, y + 1, z, cols[i % cols.length]); if (i % 2) x += 2; else y -= 2; z += 1; if (x > 11) x = 11; if (y < 1) y = 1; }
-    w.box(x - 1, y - 1, z, x + 2, y + 2, z, '#ffffff');
-    for (i = 1; i <= 3; i++) w.set(x, y, z + i, '#cfd6e6');
-    w.set(x + 1, y, z + 3, '#18b46b'); w.box(0, 12, 1, 2, 13, 1, '#cfd6e6');
-    return render(w, { sky: ['#7cc4ff', '#dff1ff'], clouds: true, seed: 3 });
-  };
-  S['pack-tycoon'] = function () {
-    var w = new World(); w.box(0, 0, 0, 15, 13, 0, G);
-    w.hollow(2, 2, 1, 9, 8, 4, '#c9ced8'); w.box(2, 2, 5, 9, 8, 5, '#6b7487'); w.box(4, 8, 1, 5, 8, 3, '#3a4152');
-    w.box(10, 4, 1, 15, 4, 1, '#2b2f3a');
-    for (var i = 0; i < 3; i++) { w.box(11 + i * 2, 3, 2, 11 + i * 2, 5, 3, '#8f5bff'); w.set(11 + i * 2, 4, 4, '#ffd23f'); }
-    w.set(12, 4, 2, '#18b46b'); w.set(14, 4, 2, '#18b46b');
-    w.box(12, 9, 1, 14, 11, 1, '#18b46b'); w.box(12, 9, 2, 13, 10, 2, '#18b46b'); w.set(12, 9, 3, '#18b46b');
-    w.set(1, 11, 1, '#ffd23f'); w.tree(0, 12, 1); w.tree(14, 12, 1);
-    for (var z = 6; z < 9; z++) w.set(8, 3, z, '#3a4152');
-    return render(w, { sky: ['#8fd3ff', '#eaf7ff'], clouds: true, seed: 7 });
-  };
-  S['pack-simulator'] = function () {
-    var w = new World(); island(w, 15, 11, G, DIRT, 3); var r = rng(5), i, x, y, t;
-    for (i = 0; i < 4; i++) { x = 2 + (r() * 11) | 0; y = 2 + (r() * 11) | 0; w.tree(x, y, w.heightTop(x, y) + 1); }
-    for (i = 0; i < 9; i++) { x = 1 + (r() * 13) | 0; y = 1 + (r() * 13) | 0; t = w.heightTop(x, y); if (t >= 0) w.set(x, y, t + 1, i % 3 ? '#ffd23f' : '#3fe0ff'); }
-    t = w.heightTop(7, 7) + 1; w.box(6, 6, t, 8, 8, t + 2, '#3fe0ff'); w.box(7, 7, t + 3, 7, 7, t + 4, '#a5f3ff');
-    return render(w, { sky: ['#ffb3e0', '#fff1d6'], clouds: true, seed: 9 });
-  };
-  S['pack-terror'] = function () {
-    var w = new World(); island(w, 15, 21, '#3b4a3a', '#2a2a33', 2);
-    w.hollow(4, 4, 2, 10, 9, 6, '#5a4a63'); w.box(4, 4, 7, 10, 9, 7, '#2a2a33'); w.box(5, 5, 8, 9, 8, 8, '#2a2a33');
-    w.set(10, 6, 4, '#ffd23f'); w.set(10, 8, 4, '#ffd23f'); w.set(7, 9, 5, '#ffd23f'); w.set(5, 9, 3, '#ff3b3b');
-    w.box(7, 9, 2, 8, 9, 3, '#1b1b22');
-    function dead(x, y) { var z = w.heightTop(x, y) + 1; for (var i = 0; i < 4; i++) w.set(x, y, z + i, '#4a3b30'); w.set(x + 1, y, z + 3, '#4a3b30'); w.set(x, y + 1, z + 2, '#4a3b30'); }
-    dead(1, 7); dead(12, 3); dead(12, 11);
-    [[2, 11], [3, 12], [11, 1]].forEach(function (p) { w.set(p[0], p[1], w.heightTop(p[0], p[1]) + 1, '#9aa0b5'); });
-    return render(w, { sky: ['#120c24', '#3b2a5c'], stars: true, moon: '#e9e3c7', seed: 13 });
-  };
-  S['pack-carreras'] = function () {
-    var w = new World(); w.box(0, 0, 0, 15, 15, 0, G);
-    for (var x = 1; x <= 14; x++) for (var y = 1; y <= 14; y++) if (x <= 3 || x >= 12 || y <= 3 || y >= 12) w.set(x, y, 0, '#3a3f4d');
-    for (x = 4; x <= 11; x += 2) { w.set(x, 2, 0, '#ffffff'); w.set(x, 13, 0, '#ffffff'); }
-    for (y = 1; y <= 3; y++) w.set(8, y, 0, (y % 2) ? '#ffffff' : '#141a2e');
-    function car(x, y, c) { w.box(x, y, 1, x + 2, y + 1, 1, c); w.box(x + 1, y, 2, x + 1, y + 1, 2, '#bfe6ff'); }
-    car(4, 1, '#ff4b3e'); car(12, 6, '#2d5bff'); car(9, 12, '#ffd23f');
-    w.tree(7, 7, 1); w.tree(9, 9, 1); w.box(6, 9, 1, 7, 10, 1, '#ffd23f');
-    for (var z = 1; z <= 4; z++) w.set(8, 0, z, '#cfd6e6');
-    return render(w, { sky: ['#6ab7ff', '#e8f6ff'], clouds: true, seed: 17 });
-  };
-  S['pack-rpg'] = function () {
-    var w = new World(); w.box(0, 0, 0, 16, 16, 0, '#2f8cff');
-    w.box(2, 2, 0, 14, 14, 1, G); w.box(2, 2, 0, 14, 14, 0, DIRT);
-    w.hollow(5, 5, 2, 11, 11, 4, '#b8bcc9');
-    [[4, 4], [11, 4], [4, 11], [11, 11]].forEach(function (p) { w.box(p[0], p[1], 2, p[0] + 1, p[1] + 1, 7, '#9aa0b5'); w.box(p[0], p[1], 8, p[0] + 1, p[1] + 1, 8, '#ff4b3e'); });
-    w.box(7, 7, 2, 9, 9, 8, '#c9ced8'); w.box(8, 8, 9, 8, 8, 10, '#ffd23f');
-    w.box(8, 11, 2, 8, 15, 1, '#c8a46a');
-    w.tree(3, 13, 2); w.tree(13, 2, 2); w.tree(2, 8, 2);
-    return render(w, { sky: ['#ffcf8a', '#ffeedb'], clouds: true, seed: 19 });
-  };
-  S['curso-portada'] = function () {
-    var w = new World(); island(w, 13, 31, G, DIRT, 2);
-    avatar(w, 5, 6, w.heightTop(6, 7) + 1);
-    w.box(9, 3, 7, 11, 5, 9, '#8f5bff'); w.set(10, 4, 10, '#3fe0ff'); w.set(10, 6, 8, '#3fe0ff'); w.set(12, 4, 8, '#3fe0ff');
-    w.tree(2, 3, w.heightTop(2, 3) + 1); w.tree(10, 10, w.heightTop(10, 10) + 1);
-    var t = w.heightTop(1, 9) + 1; w.box(1, 9, t, 2, 10, t, '#ffd23f');
-    return render(w, { sky: ['#2d5bff', '#8fb0ff'], clouds: true, seed: 31 });
-  };
-  S['avatar-instructor'] = function () {
-    var w = new World(); w.box(0, 0, 0, 6, 6, 0, '#ffd23f'); avatar(w, 2, 3, 1, '#ff4b3e');
-    return render(w, { sky: ['#ffe9a8', '#fff7dc'], seed: 37 });
-  };
-  [
-    { name: 'juego-isla-pirata', top: '#f2d78b', side: '#c9a45c', sky: ['#5ec8ff', '#d9f4ff'], water: '#2f8cff', props: 'palm' },
-    { name: 'juego-ciudad-neon', top: '#2b2f45', side: '#1b1e2e', sky: ['#0b0820', '#311c57'], props: 'city', stars: true },
-    { name: 'juego-granja', top: G, side: DIRT, sky: ['#9ee3ff', '#f2fbff'], props: 'farm', clouds: true },
-    { name: 'juego-volcan', top: '#4a4a52', side: '#2e2e34', sky: ['#ff8a4a', '#ffd7a8'], props: 'volcano' },
-    { name: 'juego-espacio', top: '#9aa0b5', side: '#6b7187', sky: ['#05060f', '#1c1f3d'], props: 'space', stars: true },
-    { name: 'juego-nieve', top: '#ffffff', side: '#c4d4e8', sky: ['#a8c8ff', '#eef4ff'], props: 'snow', clouds: true }
-  ].forEach(function (t, i) {
-    S[t.name] = function () {
-      var w = new World(), r = rng(100 + i), k, p, x, y, z;
-      if (t.water) w.box(-2, -2, 0, 16, 16, 0, t.water);
-      island(w, 15, 40 + i, t.top, t.side, t.props === 'volcano' ? 2 : 3);
-      function spot() { var x = 2 + (r() * 11) | 0, y = 2 + (r() * 11) | 0; return [x, y, w.heightTop(x, y) + 1]; }
-      if (t.props === 'palm') { for (k = 0; k < 4; k++) { p = spot(); w.tree(p[0], p[1], p[2], '#a8743f', '#28b463', 3); } p = spot(); w.box(p[0], p[1], p[2], p[0] + 1, p[1], p[2], '#8a5a34'); w.set(p[0], p[1], p[2] + 1, '#ffd23f'); }
-      if (t.props === 'city') { var neon = ['#ff3bd4', '#3fe0ff', '#ffd23f', '#8f5bff']; for (k = 0; k < 7; k++) { p = spot(); var h = 2 + (r() * 6) | 0; w.box(p[0], p[1], p[2], p[0], p[1], p[2] + h, '#3a3f5c'); w.set(p[0], p[1], p[2] + h + 1, neon[k % 4]); } }
-      if (t.props === 'farm') {
-        for (x = 3; x < 12; x++) for (y = 3; y < 7; y++) if (w.heightTop(x, y) >= 0 && x % 2) w.set(x, y, w.heightTop(x, y), '#c98b3a');
-        p = spot(); w.hollow(p[0], p[1], p[2], p[0] + 2, p[1] + 2, p[2] + 1, '#d94a3a'); w.box(p[0], p[1], p[2] + 2, p[0] + 2, p[1] + 2, p[2] + 2, '#f2f2f2');
-        for (k = 0; k < 2; k++) { p = spot(); w.tree(p[0], p[1], p[2]); }
-      }
-      if (t.props === 'volcano') { for (z = 3; z < 9; z++) { var rad = Math.max(1, (5 - ((z - 3) * 0.7)) | 0); w.box(7 - rad, 7 - rad, z, 7 + rad, 7 + rad, z, '#3a3a40'); } w.box(6, 6, 8, 8, 8, 8, '#ff5a1f'); w.set(7, 7, 9, '#ffd23f'); w.box(8, 9, 2, 8, 12, 3, '#ff5a1f'); }
-      if (t.props === 'space') { for (k = 0; k < 3; k++) { p = spot(); w.set(p[0], p[1], p[2] - 1, '#5d6278'); } p = spot(); x = p[0]; y = p[1]; z = p[2]; w.box(x, y, z, x, y, z + 5, '#ffffff'); w.set(x, y, z + 6, '#ff4b3e'); w.set(x + 1, y, z, '#ff4b3e'); w.set(x - 1, y, z, '#ff4b3e'); w.set(x, y, z + 2, '#3fe0ff'); }
-      if (t.props === 'snow') { for (k = 0; k < 5; k++) { p = spot(); w.tree(p[0], p[1], p[2], '#6b4a2e', '#1f6f4a', 2); w.set(p[0], p[1], p[2] + 4, '#ffffff'); } p = spot(); w.box(p[0], p[1], p[2], p[0] + 1, p[1] + 1, p[2], '#bfe6ff'); }
-      return render(w, { sky: t.sky, stars: t.stars, clouds: t.clouds, seed: 200 + i });
-    };
-  });
-
-  var cache = {};
-  window.IMG = function (name) {
-    if (!cache[name]) {
-      var svg = S[name] ? S[name]() : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 5"/>';
-      cache[name] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-    }
-    return cache[name];
-  };
-  function fill(root) { (root || document).querySelectorAll('img[data-img]').forEach(function (im) { im.src = IMG(im.getAttribute('data-img')); im.removeAttribute('data-img'); }); }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { fill(); }); else fill();
-})();
-
-</script>
 </head>
 <body>
-<header id="site-nav" data-page="inicio"></header>
 
-<!-- ============ PÁGINA: INICIO ============ -->
-<div class="page" id="inicio" data-title="BloxLab Academia">
-<section class="page-hero">
-  <div class="bg-layer" data-scene="dia" data-seed="1.7">
-  </div>
+<!-- ===================== MENÚ ===================== -->
+<header class="nav">
   <div class="wrap">
-    <span class="eyebrow">Academia online · Roblox Studio + IA</span>
-    <h1>Crea juegos de <span class="hl-b">Roblox</span> con <span class="hl-y">IA</span></h1>
-    <p class="lead">Un curso completo para aprender a crear tu juego desde cero usando la inteligencia artificial como copiloto, y packs de plantillas para tener un juego jugable desde el primer día.</p>
-    <div class="hero-cta">
-      <a class="btn" href="#curso">Ver el curso</a>
-      <a class="btn ghost" href="#plantillas">Ver plantillas</a>
-    </div>
-    <div class="hero-stats">
-      <div><b data-count="12400">12.400</b><span>alumnos</span></div>
-      <div><b data-count="3100">3.100</b><span>juegos publicados</span></div>
-      <div><b data-count="8500">8.500</b><span>plantillas descargadas</span></div>
-      <div><b>4,9 / 5</b><span>valoración media</span></div>
+    <a class="logo" href="#inicio"><i></i>BloxLab</a>
+    <nav class="links" id="links">
+      <a href="#inicio">Inicio</a><a href="#curso">El curso</a><a href="#plantillas">Plantillas</a><a href="#galeria">Galería</a><a href="#contacto">Contacto</a>
+    </nav>
+    <div class="chips">
+      <button class="btn white sm cart-btn" id="cartBtn">Carrito <span class="count" id="count">0</span></button>
+      <button class="btn white sm menu-btn" id="menuBtn">Menú</button>
     </div>
   </div>
-</section>
+</header>
 
-<main class="wrap">
-  <section class="block">
-    <div class="sec-head">
-      <div><span class="eyebrow">Lo que ofrecemos</span><h2>Aprende a crear o empieza con ventaja</h2></div>
-      <p>Con el curso aprendes a crear juegos por tu cuenta. Las plantillas te dan un juego terminado para modificarlo a tu gusto. Funcionan genial juntos.</p>
-    </div>
-    <div class="grid-2">
-      <article class="card offer">
-        <div class="pic"><img data-img="curso-portada" alt="Personaje de Roblox en una isla junto a un chip de IA flotante"></div>
-        <div class="body">
-          <span class="tag">El curso</span>
-          <h3>Roblox + IA: Creador Completo</h3>
-          <p class="muted">8 módulos y 46 lecciones en vídeo para pasar de no haber abierto nunca Roblox Studio a publicar tu propio juego.</p>
-          <ul class="ticks">
-            <li>Scripting en Luau con un asistente de IA</li>
-            <li>Mapas, modelos y texturas generados con IA</li>
-            <li>Publicación y monetización con Robux</li>
-          </ul>
-          <div class="foot">
-            <div class="price">79 €<s>129 €</s></div>
-            <a class="btn blue" href="#curso">Descubrir el curso</a>
-          </div>
-        </div>
-      </article>
-      <article class="card offer">
-        <div class="pic"><img data-img="pack-tycoon" alt="Plantilla de tycoon: fábrica con droppers y cintas"></div>
-        <div class="body">
-          <span class="tag" style="background:var(--green);color:#fff">Plantillas</span>
-          <h3>Packs de juegos listos para usar</h3>
-          <p class="muted">Seis géneros: obby, tycoon, simulator, terror, carreras y RPG. Ábrelos en Roblox Studio, cámbialos con IA y publícalos.</p>
-          <ul class="ticks">
-            <li>Mapas, scripts e interfaz incluidos</li>
-            <li>Prompts de IA para personalizar cada pack</li>
-            <li>Hasta un 20% de descuento combinando packs</li>
-          </ul>
-          <div class="foot">
-            <div class="price"><small class="muted" style="font:700 .9rem var(--font-body)">desde</small> 19 €</div>
-            <a class="btn" href="#plantillas">Ver los packs</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
-</main>
-
-<div class="marquee" aria-label="Juegos creados por alumnos">
-  <div class="marquee-track" id="marquee"></div>
-</div>
-
-<main class="wrap">
-  <section class="block">
-    <div class="sec-head">
-      <div><span class="eyebrow">Método</span><h2>De la idea al juego publicado</h2></div>
-      <p>El mismo camino que siguen los creadores de Roblox, con la IA ayudándote en cada paso.</p>
-    </div>
-    <div class="grid-4">
-      <div class="card step"><div class="n">1</div><h3>Imagina</h3><p>Describe tu juego con palabras y la IA te ayuda a convertirlo en un documento de diseño.</p></div>
-      <div class="card step"><div class="n">2</div><h3>Construye</h3><p>Monta el mapa en Roblox Studio o parte de una plantilla con todo ya hecho.</p></div>
-      <div class="card step"><div class="n">3</div><h3>Programa</h3><p>Pide scripts en Luau a la IA y aprende a entenderlos, probarlos y corregirlos.</p></div>
-      <div class="card step"><div class="n">4</div><h3>Publica</h3><p>Prueba con amigos, ajusta, publica y empieza a ganar Robux con Game Passes.</p></div>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="grid-2" style="align-items:center">
-      <div style="display:grid;gap:16px">
-        <span class="eyebrow" style="justify-self:start">Pruébalo</span>
-        <h2>Así trabaja la IA contigo</h2>
-        <p class="muted">En el curso aprendes a pedirle a la IA exactamente lo que necesitas. Elige una idea y mira el script de Luau que se genera. Luego, en clase, explicamos cada línea.</p>
-        <ul class="ticks">
-          <li>Prompts probados para cada tipo de mecánica</li>
-          <li>Cómo detectar y arreglar errores del código generado</li>
-          <li>Buenas prácticas para que tu juego no se rompa</li>
-        </ul>
-      </div>
-      <div class="card ai-demo" aria-label="Demostración: la IA convierte una idea en código Luau">
-        <div class="ai-bar"><i></i><i></i><i></i><span style="margin-left:auto">Asistente IA · Luau</span></div>
-        <div class="chips" role="group" aria-label="Elige una idea">
-          <button class="chip" type="button" data-p="0" aria-pressed="true">Puerta que se abre</button>
-          <button class="chip" type="button" data-p="1">Moneda con puntos</button>
-          <button class="chip" type="button" data-p="2">Suelo de lava</button>
-        </div>
-        <div class="prompt-line" id="promptLine"><b>Tú:</b> …</div>
-        <pre class="code" id="codeOut"></pre>
-      </div>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="sec-head">
-      <div><span class="eyebrow">Plantillas</span><h2>Los packs más vendidos</h2></div>
-      <a class="btn ghost" href="#plantillas">Ver los 6 packs</a>
-    </div>
-    <div class="packs" id="featured"></div>
-  </section>
-
-  <section class="block">
-    <div class="sec-head"><div><span class="eyebrow">Opiniones</span><h2>Lo que dicen los alumnos</h2></div></div>
-    <div class="grid-3">
-      <div class="card quote">
-        <span class="stars" aria-label="5 de 5">★★★★★</span>
-        <p>“Nunca había programado. Con el curso y el Pack Obby publiqué mi primer juego en tres semanas y ya tiene más de 8.000 visitas.”</p>
-        <div class="who"><div class="avatar" style="background:var(--blue)">L</div><div><b>Lucía, 14 años</b><small>Curso + Pack Obby</small></div></div>
-      </div>
-      <div class="card quote">
-        <span class="stars" aria-label="5 de 5">★★★★★</span>
-        <p>“La IA me explica cada línea de Luau. Cambié el Tycoon a una pizzería en una tarde y ahora juego con mis amigos.”</p>
-        <div class="who"><div class="avatar" style="background:var(--red)">M</div><div><b>Marcos, 16 años</b><small>Pack Tycoon Factory</small></div></div>
-      </div>
-      <div class="card quote">
-        <span class="stars" aria-label="5 de 5">★★★★★</span>
-        <p>“Lo usamos en clase de tecnología. Los alumnos aprenden lógica de programación sin darse cuenta y están súper motivados.”</p>
-        <div class="who"><div class="avatar" style="background:var(--green)">A</div><div><b>Ana, profesora</b><small>Licencia para colegios</small></div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="cta-band">
+<!-- ===================== PÁGINA: INICIO ===================== -->
+<div class="page" id="inicio">
+  <section class="hero">
+    <div class="sky"></div>
+    <div class="wrap">
       <div>
-        <h2>Curso + Mega Bundle por 178 €</h2>
-        <p>Aprende con el curso y practica con los 6 packs de plantillas. Comprando cada pack por separado pagarías 231 €.</p>
+        <span class="tag">Academia online · Roblox Studio + IA</span>
+        <h1 style="margin-top:16px">Crea juegos de Roblox con <span class="hl">IA</span></h1>
+        <p class="lead">Un curso completo para aprender a crear tu juego desde cero con la inteligencia artificial como copiloto, y packs de plantillas para tener un juego jugable desde el primer día.</p>
+        <div class="chips"><a class="btn" href="#curso">Ver el curso</a><a class="btn white" href="#plantillas">Ver plantillas</a></div>
+        <div class="stats"><div><b>12.400</b><span>alumnos</span></div><div><b>3.100</b><span>juegos publicados</span></div><div><b>4,9 / 5</b><span>valoración</span></div></div>
       </div>
-      <div class="actions">
-        <button class="btn" type="button" id="comboBtn">Añadir los dos</button>
-        <a class="btn ghost" href="#mega">Ver el bundle</a>
-      </div>
+      <img class="hero-art" data-img="portada-t" alt="Personaje de Roblox en una isla junto a un chip de IA">
     </div>
+    <div class="ground"></div>
   </section>
-</main>
+
+  <main class="wrap">
+    <section class="block">
+      <div class="head"><div><span class="tag">Lo que ofrecemos</span><h2>Aprende a crear o empieza con ventaja</h2></div></div>
+      <div class="grid" style="--cols:2">
+        <article class="card item">
+          <img class="pic" data-img="portada" alt="">
+          <div class="body">
+            <h3>Curso Roblox + IA: Creador Completo</h3>
+            <p class="muted">8 módulos para pasar de no haber abierto nunca Roblox Studio a publicar tu propio juego.</p>
+            <ul class="ticks"><li>Scripts en Luau con un asistente de IA</li><li>Mapas y modelos generados con IA</li><li>Publicar y ganar Robux</li></ul>
+            <div class="foot"><div class="price">79 €<s>129 €</s></div><a class="btn blue" href="#curso">Ver el curso</a></div>
+          </div>
+        </article>
+        <article class="card item">
+          <img class="pic" data-img="tycoon" alt="">
+          <div class="body">
+            <h3>Packs de plantillas de juegos</h3>
+            <p class="muted">Obby, tycoon, simulator, terror, carreras y RPG. Ábrelos en Roblox Studio, cámbialos con IA y publícalos.</p>
+            <ul class="ticks"><li>Mapas, scripts e interfaz incluidos</li><li>Prompts de IA para personalizarlos</li><li>Hasta un 20% de descuento combinando</li></ul>
+            <div class="foot"><div class="price">desde 19 €</div><a class="btn" href="#plantillas">Ver los packs</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="head"><div><span class="tag">Método</span><h2>De la idea al juego publicado</h2></div></div>
+      <div class="grid" style="--cols:4">
+        <div class="card body step"><b>1</b><h3>Imagina</h3><p class="muted">Describe tu juego y la IA lo convierte en un plan.</p></div>
+        <div class="card body step"><b>2</b><h3>Construye</h3><p class="muted">Monta el mapa o parte de una plantilla ya hecha.</p></div>
+        <div class="card body step"><b>3</b><h3>Programa</h3><p class="muted">Pide scripts a la IA y aprende a entenderlos.</p></div>
+        <div class="card body step"><b>4</b><h3>Publica</h3><p class="muted">Pruébalo con amigos y gana Robux.</p></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="grid" style="--cols:2;align-items:center">
+        <div style="display:grid;gap:14px">
+          <span class="tag">Pruébalo</span>
+          <h2>Así trabaja la IA contigo</h2>
+          <p class="muted">Elige una idea y mira el script de Luau que genera la IA. En el curso te explicamos cada línea.</p>
+        </div>
+        <div class="card">
+          <div class="term-bar">Asistente IA · Luau</div>
+          <div class="chips" id="demoChips" style="padding:14px"></div>
+          <pre class="code" id="code"></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="head"><div><span class="tag">Plantillas</span><h2>Los packs más vendidos</h2></div><a class="btn white" href="#plantillas">Ver los 6</a></div>
+      <div class="grid" id="topPacks"></div>
+    </section>
+
+    <section class="block">
+      <div class="head"><div><span class="tag">Opiniones</span><h2>Lo que dicen los alumnos</h2></div></div>
+      <div class="grid">
+        <div class="card body quote"><p>“Nunca había programado. Con el curso y el Pack Obby publiqué mi primer juego en tres semanas.”</p><div class="who"><span class="avatar" style="background:var(--blue)">L</span><b>Lucía, 14</b></div></div>
+        <div class="card body quote"><p>“La IA me explica cada línea de Luau. Convertí el Tycoon en una pizzería en una tarde.”</p><div class="who"><span class="avatar" style="background:var(--red)">M</span><b>Marcos, 16</b></div></div>
+        <div class="card body quote"><p>“Lo usamos en clase de tecnología. Aprenden lógica de programación sin darse cuenta.”</p><div class="who"><span class="avatar" style="background:var(--green)">A</span><b>Ana, profesora</b></div></div>
+      </div>
+    </section>
+
+    <div class="card band"><div><h2>Curso + todos los packs: 178 €</h2><p>Por separado costaría 231 €.</p></div><button class="btn" id="combo">Añadir los dos</button></div>
+  </main>
 </div>
 
-<!-- ============ PÁGINA: CURSO ============ -->
-<div class="page" id="curso" data-title="El curso · BloxLab Academia">
-<section class="page-hero compact">
-  <div class="bg-layer" data-scene="atardecer" data-seed="4.2">
-  </div>
-  <div class="wrap" style="padding-bottom:96px">
-    <span class="eyebrow">Un solo curso · todo lo que necesitas</span>
-    <h1>Roblox + IA: <span class="hl-y">Creador Completo</span></h1>
-    <p class="lead">Aprende a crear juegos de Roblox trabajando con inteligencia artificial: desde abrir Roblox Studio por primera vez hasta publicar tu juego y ganar Robux.</p>
-  </div>
-</section>
+<!-- ===================== PÁGINA: CURSO ===================== -->
+<div class="page" id="curso">
+  <section class="hero small sunset"><div class="sky"></div><div class="wrap"><div>
+    <span class="tag">Un solo curso, todo incluido</span>
+    <h1 style="margin-top:14px">Roblox + IA: <span class="hl">Creador Completo</span></h1>
+    <p class="lead">De abrir Roblox Studio por primera vez a publicar tu juego, con la IA ayudándote en cada paso.</p>
+  </div></div><div class="ground"></div></section>
 
-<main class="wrap">
-  <div class="course-top">
-    <div style="display:grid;gap:24px">
-      <div class="card player">
-        <div class="player-screen" id="trailer">
-          <span class="player-title">Tráiler del curso</span>
-          <div class="player-caption" id="caption">Mira lo que vas a aprender</div>
-          <button class="player-big" type="button" id="bigPlay" aria-label="Reproducir tráiler"></button>
-        </div>
-        <div class="player-bar">
-          <button type="button" id="playBtn">▶ Reproducir</button>
-          <input type="range" id="seek" min="0" max="36" step="0.1" value="0" aria-label="Posición del tráiler">
-          <time id="clock">0:00 / 0:36</time>
-        </div>
-      </div>
-      <div class="card facts" id="facts">
-        <div><b>8</b><span>módulos</span></div>
-        <div><b>46</b><span>lecciones</span></div>
-        <div><b>18 h</b><span>de vídeo</span></div>
-        <div><b>6</b><span>proyectos</span></div>
-      </div>
-    </div>
-
-    <aside class="card buy-card">
-      <span class="tag" style="justify-self:start;background:var(--red);color:#fff">Oferta de lanzamiento</span>
-      <div class="price">79 €<s>129 €</s></div>
-      <div>
-        <p class="muted" style="font-size:.9rem;margin-bottom:6px">La oferta termina en</p>
-        <div class="countdown" id="countdown" aria-live="off">
-          <div><b id="cdD">00</b><small>días</small></div>
-          <div><b id="cdH">00</b><small>horas</small></div>
-          <div><b id="cdM">00</b><small>min</small></div>
-          <div><b id="cdS">00</b><small>seg</small></div>
-        </div>
-      </div>
-      <button class="btn blue" type="button" data-add="curso" data-label="Añadir el curso al carrito">Añadir el curso al carrito</button>
-      <ul class="ticks">
-        <li>Acceso para siempre y actualizaciones gratis</li>
-        <li>Asistente de IA ilimitado durante el curso</li>
-        <li>Revisión de tu juego final por un tutor</li>
-        <li>Certificado de BloxLab al terminar</li>
-        <li>Garantía de devolución de 14 días</li>
-      </ul>
-    </aside>
-  </div>
-
-  <section class="block" id="temario">
-    <div class="sec-head">
-      <div><span class="eyebrow">Temario</span><h2>Ocho módulos, de cero a publicado</h2></div>
-      <div style="display:grid;gap:8px;min-width:260px">
-        <label for="hours" style="font-weight:800">¿Cuántas horas a la semana puedes dedicarle? <span id="hoursOut">3 h</span></label>
-        <input type="range" id="hours" min="1" max="10" value="3" style="accent-color:var(--blue)">
-        <p class="muted" id="plan">Terminarás en unas 6 semanas.</p>
-      </div>
-    </div>
-    <div class="modules" id="modules"></div>
-  </section>
-
-  <section class="block">
-    <div class="sec-head">
-      <div><span class="eyebrow">Proyectos</span><h2>Lo que vas a construir</h2></div>
-      <p>Cada módulo termina con un proyecto. Estos son tres de los seis juegos que harás durante el curso.</p>
-    </div>
-    <div class="grid-3">
-      <article class="card build"><img data-img="pack-obby" alt="Obby con plataformas de colores sobre lava"><div class="body"><h3>Obby de lava</h3><p class="muted">Tu primer juego: plataformas, checkpoints y un suelo que quema. Módulo 5.</p></div></article>
-      <article class="card build"><img data-img="pack-simulator" alt="Isla con cristales y monedas"><div class="body"><h3>Simulator de cristales</h3><p class="muted">Recoge, mejora y guarda el progreso con DataStore. Módulo 6.</p></div></article>
-      <article class="card build"><img data-img="pack-terror" alt="Mansión encantada de noche"><div class="body"><h3>Mansión de terror</h3><p class="muted">Un monstruo con IA de persecución y sonido ambiental. Módulo 7.</p></div></article>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="card instructor">
-      <img data-img="avatar-instructor" alt="Avatar de Roblox del profesor">
-      <div style="display:grid;gap:12px">
-        <span class="eyebrow" style="justify-self:start">Tu profesor</span>
-        <h2>Dani “BloxDev” Martín</h2>
-        <p class="muted">Desarrollador de Roblox desde 2016. Sus juegos suman más de 40 millones de visitas y lleva tres años enseñando a crear con IA a chicos y chicas de toda España y Latinoamérica.</p>
-        <div class="chips"><span class="chip">40 M de visitas</span><span class="chip">12.400 alumnos</span><span class="chip">Top Creator 2025</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="faq">
-    <div class="sec-head"><div><span class="eyebrow">Dudas</span><h2>Preguntas sobre el curso</h2></div></div>
-    <div class="faq">
-      <details open><summary>¿Necesito saber programar?</summary><p>No. Empezamos desde cero en Roblox Studio y la IA te ayuda a escribir el código mientras aprendes qué hace cada parte.</p></details>
-      <details><summary>¿Qué edad hay que tener?</summary><p>Está pensado para mayores de 12 años. Los menores de 13 necesitan permiso de su familia para usar Roblox Studio.</p></details>
-      <details><summary>¿Qué herramientas de IA se usan?</summary><p>El asistente integrado de Roblox Studio y asistentes de chat para generar ideas, código, texturas y diálogos. Te enseñamos a escribir buenos prompts.</p></details>
-      <details><summary>¿Las plantillas están incluidas?</summary><p>El curso incluye los archivos de los 6 proyectos. Los packs de plantillas son productos aparte con juegos más grandes y completos, listos para publicar.</p></details>
-      <details><summary>¿Necesito un ordenador potente?</summary><p>Basta con un ordenador con Windows o Mac que pueda ejecutar Roblox Studio. No sirve con tablet ni móvil.</p></details>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="cta-band" style="background:var(--blue)">
-      <div><h2>Empieza hoy tu primer juego</h2><p>Si en 14 días no te convence, te devolvemos el dinero.</p></div>
-      <div class="actions"><button class="btn" type="button" data-add="curso" data-label="Quiero el curso">Quiero el curso</button><a class="btn ghost" href="#plantillas">Ver plantillas</a></div>
-    </div>
-  </section>
-</main>
-</div>
-
-<!-- ============ PÁGINA: PLANTILLAS ============ -->
-<div class="page" id="plantillas" data-title="Plantillas · BloxLab Academia">
-<section class="page-hero compact">
-  <div class="bg-layer" data-scene="neon" data-seed="9.1">
-  </div>
-  <div class="wrap">
-    <span class="eyebrow">Packs de plantillas</span>
-    <h1>Juegos listos para <span class="hl-y">abrir, cambiar y publicar</span></h1>
-    <p class="lead">Cada pack trae mapas, scripts, interfaz y prompts de IA para personalizarlo. Ábrelo en Roblox Studio y en una tarde tienes tu propio juego.</p>
-    <div class="hero-cta"><a class="btn" href="#packs">Ver los packs</a><a class="btn ghost" href="#mega">Mega Bundle: 6 packs por 99 €</a></div>
-  </div>
-</section>
-
-<main class="wrap">
-  <section class="block" id="packs">
-    <div class="card bundle-meter" style="margin-bottom:28px">
-      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
-        <b id="meterText">Combina packs y ahorra: 2 packs -10%, 3 o más -20%</b>
-        <button class="btn small ghost" type="button" data-open-cart>Ver carrito</button>
-      </div>
-      <div class="progress-line" aria-hidden="true"><div id="meterBar"></div></div>
-      <div class="bundle-steps"><span id="st1">1 pack</span><span id="st2">2 packs · -10%</span><span id="st3">3+ packs · -20%</span></div>
-    </div>
-
-    <div class="toolbar">
-      <div class="chips" role="group" aria-label="Filtrar por género" id="genres"></div>
-      <label style="display:flex;gap:8px;align-items:center;font-weight:800">Ordenar
-        <select class="select" id="sort">
-          <option value="pop">Más vendidos</option>
-          <option value="rating">Mejor valorados</option>
-          <option value="asc">Precio: menor a mayor</option>
-          <option value="desc">Precio: mayor a menor</option>
-        </select>
-      </label>
-    </div>
-    <div class="packs" id="grid"></div>
-  </section>
-
-  <section class="block" id="mega">
-    <div class="card mega">
-      <div class="body">
-        <span class="tag" style="justify-self:start">Ahorra 53 €</span>
-        <h2>Mega Bundle</h2>
-        <p>Los 6 packs de plantillas en una sola compra: 32 mapas, más de 160 scripts y todos los prompts de IA. Incluye las actualizaciones futuras de cada pack.</p>
-        <div class="price" style="font-size:2.4rem">99 €<s style="color:#e5dcff">152 €</s></div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn" type="button" data-add="mega" data-label="Añadir el Mega Bundle">Añadir el Mega Bundle</button></div>
-      </div>
-      <div class="collage" id="collage"></div>
-    </div>
-  </section>
-
-  <section class="block" id="comparar">
-    <div class="sec-head"><div><span class="eyebrow">Comparar</span><h2>¿Qué pack es para ti?</h2></div><p>Si estás empezando, el Obby es el más fácil de modificar. Si ya hiciste el curso, prueba el RPG o el de Terror.</p></div>
-    <div class="compare-wrap">
-      <table class="compare">
-        <thead><tr><th>Pack</th><th>Dificultad</th><th>Mapas</th><th>Scripts</th><th>Valoración</th><th>Precio</th></tr></thead>
-        <tbody id="compareBody"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="block">
-    <div class="sec-head"><div><span class="eyebrow">Licencia</span><h2>Preguntas sobre las plantillas</h2></div></div>
-    <div class="faq">
-      <details open><summary>¿Puedo publicar un juego hecho con una plantilla?</summary><p>Sí. Puedes publicarlo y ganar Robux con él. Solo te pedimos que no revendas la plantilla tal cual como si fuera tuya.</p></details>
-      <details><summary>¿Cómo recibo los archivos?</summary><p>Después de comprar descargas un archivo .rbxl por cada mapa. Lo abres con doble clic en Roblox Studio y ya está.</p></details>
-      <details><summary>¿Necesito el curso para usarlas?</summary><p>No es obligatorio. Cada pack incluye una guía en PDF y vídeos cortos explicando cómo cambiar lo básico. Con el curso le sacarás mucho más partido.</p></details>
-      <details><summary>¿Funcionan en móvil y consola?</summary><p>Sí. Todas las interfaces están adaptadas a PC, móvil, tablet y Xbox.</p></details>
-    </div>
-  </section>
-</main>
-</div>
-
-<!-- ============ PÁGINA: GALERIA ============ -->
-<div class="page" id="galeria" data-title="Galería · BloxLab Academia">
-<section class="page-hero compact">
-  <div class="bg-layer" data-scene="noche" data-seed="3.3">
-  </div>
-  <div class="wrap">
-    <span class="eyebrow">Comunidad</span>
-    <h1>Juegos creados por <span class="hl-y">nuestros alumnos</span></h1>
-    <p class="lead">Todos estos juegos se hicieron con el curso o partiendo de una plantilla. Dales un me gusta y descubre lo que puedes llegar a crear.</p>
-    <div class="hero-stats">
-      <div><b data-count="3100">3.100</b><span>juegos publicados</span></div>
-      <div><b data-count="41" data-suffix=" M">41 M</b><span>visitas en total</span></div>
-    </div>
-  </div>
-</section>
-
-<main class="wrap">
-  <section class="block">
-    <div class="card" style="display:grid;grid-template-columns:1.3fr 1fr;overflow:hidden" id="gFeatured">
-      <img data-img="juego-isla-pirata" alt="Isla pirata con palmeras y un cofre" style="width:100%;height:100%;object-fit:cover;border-right:3px solid var(--line);min-width:0">
-      <div style="padding:28px;display:grid;gap:12px;align-content:center;min-width:0">
-        <span class="tag" style="justify-self:start">Juego de la semana</span>
-        <h2>Tesoro de la Isla Perdida</h2>
-        <p class="muted">Creado por <b>Hugo, 15 años</b>, partiendo del Pack Simulator. Cambió la temática a piratas con IA y añadió un sistema de cofres.</p>
-        <div class="chips"><span class="chip">182.400 visitas</span><span class="chip">94% de likes</span><span class="chip">Simulator</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" style="padding-top:0">
-    <div class="sec-head">
-      <div><span class="eyebrow">Galería</span><h2>Explora los juegos</h2></div>
-      <div class="chips" role="group" aria-label="Filtrar por género" id="filters"></div>
-    </div>
-    <div class="gallery" id="gallery"></div>
-  </section>
-
-  <section class="block">
-    <div class="cta-band" style="background:var(--purple)">
-      <div><h2>¿Has publicado tu juego?</h2><p>Mándanos el enlace y lo enseñamos aquí. Cada mes elegimos uno para el juego de la semana.</p></div>
-      <div class="actions"><a class="btn" href="#contacto">Enviar mi juego</a></div>
-    </div>
-  </section>
-</main>
-</div>
-
-<!-- ============ PÁGINA: CONTACTO ============ -->
-<div class="page" id="contacto" data-title="Contacto · BloxLab Academia">
-<section class="page-hero compact">
-  <div class="bg-layer" data-scene="dia" data-seed="6.6">
-  </div>
-  <div class="wrap">
-    <span class="eyebrow">Contacto</span>
-    <h1>¿Hablamos de <span class="hl-y">tu juego</span>?</h1>
-    <p class="lead">Resolvemos dudas sobre el curso y las plantillas, recibimos los juegos de los alumnos y preparamos licencias para colegios.</p>
-  </div>
-</section>
-
-<main class="wrap">
-  <section class="block">
-    <div class="grid-2" style="grid-template-columns:1.4fr 1fr;align-items:start">
-      <form class="card form" id="contact" novalidate>
-        <h2 style="font-size:1.8rem">Escríbenos</h2>
-        <div class="row">
-          <div><label for="cName">Nombre</label><input id="cName" type="text" autocomplete="name" placeholder="Tu nombre"></div>
-          <div><label for="cMail">Correo</label><input id="cMail" type="email" autocomplete="email" placeholder="tu@correo.com"></div>
-        </div>
-        <div><label for="cTopic">Tema</label>
-          <select id="cTopic">
-            <option value="curso">Dudas sobre el curso</option>
-            <option value="plantillas">Dudas sobre las plantillas</option>
-            <option value="juego">Quiero enviar mi juego a la galería</option>
-            <option value="colegio">Licencia para colegio o academia</option>
-          </select>
-        </div>
-        <div id="gameField" hidden><label for="cLink">Enlace a tu juego de Roblox</label><input id="cLink" type="url" placeholder="https://www.roblox.com/games/…"></div>
-        <div id="schoolField" hidden><label for="cStudents">Número de alumnos</label><input id="cStudents" type="number" min="5" value="25"><p class="muted" id="schoolPrice" style="margin-top:6px"></p></div>
-        <div><label for="cMsg">Mensaje</label><textarea id="cMsg" maxlength="600" placeholder="Cuéntanos en qué te podemos ayudar"></textarea><small class="muted" id="cCount">0 / 600</small></div>
-        <p class="err" id="cErr" hidden></p>
-        <button class="btn blue" type="submit" style="justify-self:start">Enviar mensaje</button>
-        <div class="form-ok" id="cOk" hidden></div>
-      </form>
-
+  <main class="wrap">
+    <section class="block course-grid">
       <div style="display:grid;gap:24px">
-        <div class="card contact-list">
-          <div><small>Correo</small><span><b id="mail">hola@bloxlab.academy</b><button class="copy" type="button" data-copy="mail">Copiar</button></span></div>
-          <div><small>Discord de la comunidad</small><b>discord.gg/bloxlab</b></div>
-          <div><small>Horario de soporte</small><span>Lunes a viernes, de 16:00 a 20:00</span></div>
-          <div><small>Respuesta media</small><span>Menos de 24 horas</span></div>
-        </div>
-        <div class="card" style="overflow:hidden"><img data-img="avatar-instructor" alt="Avatar del equipo de BloxLab" style="width:100%;aspect-ratio:16/10;object-fit:cover"></div>
+        <div class="card"><img class="pic" data-img="portada" alt="Portada del curso" style="border:0"></div>
+        <div class="card facts"><div><b>8</b>módulos</div><div><b id="nLessons">40</b>lecciones</div><div><b id="nHours">15 h</b>de vídeo</div><div><b>6</b>proyectos</div></div>
       </div>
-    </div>
-  </section>
+      <aside class="card body" style="gap:16px">
+        <span class="tag" style="background:var(--red);color:#fff">Oferta de lanzamiento</span>
+        <div class="price" style="font-size:2.4rem">79 €<s>129 €</s></div>
+        <p class="muted">La oferta termina en:</p>
+        <div class="timer" id="timer"></div>
+        <button class="btn blue" data-add="curso">Añadir al carrito</button>
+        <ul class="ticks"><li>Acceso para siempre</li><li>Asistente de IA ilimitado</li><li>Un tutor revisa tu juego final</li><li>Certificado y devolución en 14 días</li></ul>
+      </aside>
+    </section>
 
-  <section class="block" id="colegios">
-    <div class="sec-head"><div><span class="eyebrow">Para colegios</span><h2>Lleva Roblox + IA a tu clase</h2></div><p>Licencias con el curso completo, el Mega Bundle y un panel para seguir el progreso de cada alumno.</p></div>
-    <div class="grid-3">
-      <div class="card step"><div class="n">A</div><h3>Panel del profesor</h3><p>Ve qué lecciones ha terminado cada alumno y revisa sus proyectos.</p></div>
-      <div class="card step"><div class="n">B</div><h3>Guías didácticas</h3><p>Sesiones de 50 minutos listas para dar en clase de tecnología.</p></div>
-      <div class="card step"><div class="n">C</div><h3>Formación al docente</h3><p>Dos sesiones en directo para que domines Roblox Studio y la IA.</p></div>
-    </div>
-  </section>
-</main>
+    <section class="block" id="temario">
+      <div class="head"><div><span class="tag">Temario</span><h2>Ocho módulos, de cero a publicado</h2></div></div>
+      <div id="modules"></div>
+    </section>
+
+    <section class="block">
+      <div class="head"><div><span class="tag">Dudas</span><h2>Preguntas frecuentes</h2></div></div>
+      <details class="acc" open><summary>¿Necesito saber programar?</summary><p class="in">No. Empezamos desde cero y la IA te ayuda a escribir el código mientras aprendes qué hace.</p></details>
+      <details class="acc"><summary>¿Qué edad hay que tener?</summary><p class="in">Más de 12 años. Los menores de 13 necesitan permiso de su familia para usar Roblox Studio.</p></details>
+      <details class="acc"><summary>¿Las plantillas van incluidas?</summary><p class="in">El curso incluye sus 6 proyectos. Los packs de plantillas son juegos más grandes que se compran aparte.</p></details>
+      <details class="acc"><summary>¿Qué ordenador necesito?</summary><p class="in">Uno con Windows o Mac que pueda abrir Roblox Studio. No sirve con tablet ni móvil.</p></details>
+    </section>
+  </main>
 </div>
 
-<footer id="site-footer"></footer>
+<!-- ===================== PÁGINA: PLANTILLAS ===================== -->
+<div class="page" id="plantillas">
+  <section class="hero small purple"><div class="sky"></div><div class="wrap"><div>
+    <span class="tag">Packs de plantillas</span>
+    <h1 style="margin-top:14px">Juegos listos para <span class="hl">cambiar y publicar</span></h1>
+    <p class="lead">Mapas, scripts, interfaz y prompts de IA. Ábrelos en Roblox Studio y en una tarde tienes tu propio juego.</p>
+  </div></div><div class="ground"></div></section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <main class="wrap">
+    <section class="block">
+      <div class="card meter"><b id="meterText"></b><div class="bar"><div id="meterBar"></div></div></div>
+      <div class="head"><div class="chips" id="genres"></div></div>
+      <div class="grid" id="packs"></div>
+    </section>
+    <section class="block" id="mega">
+      <div class="card mega">
+        <div>
+          <span class="tag">Ahorra 53 €</span>
+          <h2>Mega Bundle: los 6 packs</h2>
+          <p>32 mapas, más de 160 scripts y todos los prompts de IA en una sola compra.</p>
+          <div class="price" style="font-size:2.2rem">99 €<s style="color:#e5dcff">152 €</s></div>
+          <button class="btn" data-add="mega">Añadir el Mega Bundle</button>
+        </div>
+        <div class="collage grid" id="collage"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ===================== PÁGINA: GALERÍA ===================== -->
+<div class="page" id="galeria">
+  <section class="hero small night"><div class="sky"></div><div class="wrap"><div>
+    <span class="tag">Comunidad</span>
+    <h1 style="margin-top:14px">Juegos de <span class="hl">nuestros alumnos</span></h1>
+    <p class="lead">Todos se hicieron con el curso o partiendo de una plantilla. Pulsa una imagen para verla en grande.</p>
+  </div></div><div class="ground"></div></section>
+  <main class="wrap">
+    <section class="block">
+      <div class="head"><div class="chips" id="gFilters"></div></div>
+      <div class="grid" id="gallery"></div>
+    </section>
+  </main>
+</div>
+
+<!-- ===================== PÁGINA: CONTACTO ===================== -->
+<div class="page" id="contacto">
+  <section class="hero small green"><div class="sky"></div><div class="wrap"><div>
+    <span class="tag">Contacto</span>
+    <h1 style="margin-top:14px">¿Hablamos de <span class="hl">tu juego</span>?</h1>
+    <p class="lead">Dudas sobre el curso o las plantillas, enviar tu juego a la galería o licencias para colegios.</p>
+  </div></div><div class="ground"></div></section>
+  <main class="wrap">
+    <section class="block course-grid">
+      <form class="card form" id="form" novalidate>
+        <h2>Escríbenos</h2>
+        <label for="fName">Nombre</label><input id="fName" placeholder="Tu nombre">
+        <label for="fMail">Correo</label><input id="fMail" type="email" placeholder="tu@correo.com">
+        <label for="fTopic">Tema</label>
+        <select id="fTopic"><option>Dudas sobre el curso</option><option>Dudas sobre las plantillas</option><option>Enviar mi juego a la galería</option><option>Licencia para colegios</option></select>
+        <label for="fMsg">Mensaje</label><textarea id="fMsg" rows="5" placeholder="¿En qué te ayudamos?"></textarea>
+        <p class="err" id="fErr" hidden></p>
+        <button class="btn blue" style="justify-self:start">Enviar mensaje</button>
+        <p class="ok" id="fOk" hidden></p>
+      </form>
+      <div class="card body">
+        <b>Correo</b><p>hola@bloxlab.academy</p>
+        <b>Discord</b><p>discord.gg/bloxlab</p>
+        <b>Horario</b><p>Lunes a viernes, de 16:00 a 20:00</p>
+        <img data-img="avatar" alt="Avatar del equipo" style="border:3px solid var(--line);border-radius:8px;margin-top:10px">
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="site"><div class="wrap"><b>© 2026 BloxLab Academia</b><span>Proyecto de clase · la tienda no es real · no afiliado a Roblox</span></div></footer>
+
+<!-- Ventanas -->
+<dialog id="modal"></dialog>
+<dialog class="drawer" id="drawer"><div class="drawer-in">
+  <header><h3>Tu carrito</h3><button class="btn white sm" id="closeCart">Cerrar</button></header>
+  <div class="lines" id="lines"></div>
+  <footer id="totals"></footer>
+</div></dialog>
+<div class="toast" id="toast"></div>
+
 <script>
-/* Fondo animado en 3D: un mundo de bloques estilo Roblox que se recorre en bucle, como un vídeo.
-   Necesita three.js (cargado antes desde cdnjs). Si dentro del contenedor hay un <video> que
-   carga bien (por ejemplo video/inicio.mp4), se muestra el vídeo y la escena 3D se para. */
-(function () {
-  var SCENES = {
-    dia:    { sky: 0x8fd0ff, fog: 0xbfe6ff, top: 0x5cc65a, side: 0x9b6a3f, water: 0x2f8cff, light: 1.0, accents: [0xffd23f, 0x2d5bff, 0xff4b3e] },
-    atardecer: { sky: 0xff9a6a, fog: 0xffc49a, top: 0x6fbf5a, side: 0x8a5a34, water: 0x3a6fd8, light: 0.9, accents: [0xffd23f, 0xff4b9a, 0x8f5bff] },
-    noche:  { sky: 0x120c24, fog: 0x231a42, top: 0x3b4a6a, side: 0x2a2a40, water: 0x1b2a6b, light: 0.55, accents: [0x3fe0ff, 0xff3bd4, 0xffd23f] },
-    neon:   { sky: 0x0b0820, fog: 0x1c1240, top: 0x2b2f45, side: 0x1b1e2e, water: 0x31206b, light: 0.6, accents: [0xff3bd4, 0x3fe0ff, 0x8f5bff] }
+/* =========================================================
+   1. DATOS DE LA TIENDA
+   ========================================================= */
+const COURSE = { id: 'curso', name: 'Curso Roblox + IA', price: 79, img: 'portada' };
+const MEGA = { id: 'mega', name: 'Mega Bundle (6 packs)', price: 99, img: 'rpg' };
+const PACKS = [
+  { id: 'obby', name: 'Pack Obby Extremo', genre: 'Obby', price: 19, sales: 2140, desc: '12 niveles de parkour con checkpoints, cronómetro y récords.', items: ['12 mapas de obstáculos', 'Checkpoints y reaparición', 'Tabla de récords', '30 prompts de IA'] },
+  { id: 'tycoon', name: 'Pack Tycoon Factory', genre: 'Tycoon', price: 24, sales: 1780, desc: 'Fábrica con droppers, mejoras y guardado de datos.', items: ['Base para 6 jugadores', 'Droppers y cintas', 'Árbol de mejoras', 'Guardado con DataStore'] },
+  { id: 'simulator', name: 'Pack Simulator', genre: 'Simulator', price: 24, sales: 1530, desc: 'Recoge cristales, abre huevos y equipa mascotas.', items: ['3 islas', 'Huevos y mascotas', 'Rebirths', 'Interfaz para móvil'] },
+  { id: 'terror', name: 'Pack Terror Nocturno', genre: 'Terror', price: 29, sales: 980, desc: 'Mansión con un monstruo que te persigue y linterna.', items: ['Mansión y bosque', 'Monstruo con IA', 'Linterna y escondites', 'Modo cooperativo'] },
+  { id: 'carreras', name: 'Pack Carreras Turbo', genre: 'Carreras', price: 22, sales: 870, desc: 'Coches con físicas, 5 circuitos y garaje.', items: ['5 circuitos', 'Coches con físicas', 'Contador de vueltas', 'Garaje con mejoras'] },
+  { id: 'rpg', name: 'Pack Reino RPG', genre: 'RPG', price: 34, sales: 1210, desc: 'Castillo, misiones, combate y NPCs que hablan con IA.', items: ['Castillo y mazmorra', 'Combate y enemigos', 'Misiones y niveles', 'NPCs con IA'] }
+];
+const GAMES = [
+  { t: 'Tesoro de la Isla', by: 'Hugo, 15', g: 'Simulator', img: 'pirata', likes: 912 },
+  { t: 'Neon Runner', by: 'Sara, 16', g: 'Obby', img: 'neon', likes: 481 },
+  { t: 'Escapa del Volcán', by: 'Noa, 14', g: 'Obby', img: 'volcan', likes: 385 },
+  { t: 'Aventura Polar', by: 'Martina, 12', g: 'RPG', img: 'nieve', likes: 119 },
+  { t: 'Mansión Maldita', by: 'Pablo, 16', g: 'Terror', img: 'terror', likes: 333 },
+  { t: 'Pizza Factory', by: 'Marcos, 16', g: 'Tycoon', img: 'tycoon', likes: 107 },
+  { t: 'Turbo Karts', by: 'Álex, 15', g: 'Carreras', img: 'carreras', likes: 194 },
+  { t: 'El Reino Olvidado', by: 'Carla, 17', g: 'RPG', img: 'rpg', likes: 256 },
+  { t: 'Torre Arcoíris', by: 'Lucía, 14', g: 'Obby', img: 'obby', likes: 41 }
+];
+const MODULES = [
+  ['Bienvenida a Roblox Studio', ['Instalar Roblox Studio', 'La interfaz', 'Tu primera Part', 'Probar el juego'], 50],
+  ['Construir mundos', ['Mover y escalar', 'Materiales', 'Terrain', 'Luz y cielo', 'Proyecto: tu isla'], 110],
+  ['Pensar con IA', ['Qué puede hacer la IA', 'Escribir buenos prompts', 'Del plan al juego', 'Revisar lo que da la IA'], 90],
+  ['Luau con tu copiloto IA', ['Variables', 'Condiciones', 'Bucles', 'Funciones', 'Eventos', 'Arreglar errores'], 160],
+  ['Mecánicas de juego', ['Puertas', 'Monedas y puntos', 'Lava y trampas', 'Checkpoints', 'Proyecto: Obby'], 150],
+  ['Interfaz y guardado', ['Botones en pantalla', 'Tienda', 'DataStore', 'Proyecto: Simulator'], 130],
+  ['Modelos y sonido con IA', ['Texturas con IA', 'Modelos 3D', 'Enemigos con IA', 'Proyecto: Terror'], 120],
+  ['Publicar y ganar Robux', ['Publicar', 'Icono y descripción', 'Game Passes', 'Proyecto final'], 100]
+];
+const ALL = [COURSE, MEGA, ...PACKS];
+const find = id => ALL.find(p => p.id === id);
+const eur = n => n.toLocaleString('es-ES', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }) + ' €';
+const $ = s => document.querySelector(s);
+
+/* =========================================================
+   2. IMÁGENES DE BLOQUES (se dibujan con código, una vez)
+   ========================================================= */
+const IMAGES = {};
+function IMG(name) {
+  if (!IMAGES[name]) IMAGES[name] = 'data:image/svg+xml,' + encodeURIComponent(drawScene(name));
+  return IMAGES[name];
+}
+function drawScene(name) {
+  const clear = name.endsWith('-t'); // "-t" = sin cielo de fondo (transparente)
+  name = name.replace('-t', '');
+  const cubes = new Map();
+  const set = (x, y, z, c) => cubes.set(x + ',' + y + ',' + z, { x, y, z, c });
+  const has = (x, y, z) => cubes.has(x + ',' + y + ',' + z);
+  const box = (x0, y0, z0, x1, y1, z1, c) => { for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) for (let z = z0; z <= z1; z++) set(x, y, z, c); };
+  const top = (x, y) => { let t = 0; while (has(x, y, t)) t++; return t; };
+  const tree = (x, y, leaf = '#2fa84f') => { const z = top(x, y); box(x, y, z, x, y, z + 1, '#8a5a34'); box(x - 1, y - 1, z + 2, x + 1, y + 1, z + 2, leaf); set(x, y, z + 3, leaf); };
+  const island = (grass, dirt, n = 12) => { for (let x = 0; x < n; x++) for (let y = 0; y < n; y++) {
+    const d = Math.hypot(x - n / 2 + .5, y - n / 2 + .5) / (n / 2); if (d > 1) continue;
+    const h = Math.round((1 - d) * 3 + Math.sin(x) * .6); box(x, y, 0, x, y, h - 1, dirt); set(x, y, h, grass); } };
+  let sky = ['#7cc4ff', '#e3f3ff'], stars = false;
+
+  // Cada escena coloca sus bloques
+  const scenes = {
+    portada() { island('#5cc65a', '#9b6a3f'); const z = top(5, 6);
+      box(5, 6, z, 6, 7, z + 2, '#18b46b'); box(5, 6, z + 3, 6, 7, z + 5, '#2d5bff'); box(4, 6, z + 3, 4, 7, z + 5, '#ffd23f'); box(7, 6, z + 3, 7, 7, z + 5, '#ffd23f'); box(5, 6, z + 6, 6, 7, z + 7, '#ffd23f');
+      box(8, 2, 7, 10, 4, 9, '#8f5bff'); set(9, 3, 10, '#3fe0ff'); tree(2, 3); tree(9, 9); sky = ['#2d5bff', '#9fb8ff']; },
+    avatar() { box(0, 0, 0, 5, 5, 0, '#ffd23f'); box(2, 2, 1, 3, 3, 3, '#18b46b'); box(2, 2, 4, 3, 3, 6, '#ff4b3e'); box(1, 2, 4, 1, 3, 6, '#ffd23f'); box(4, 2, 4, 4, 3, 6, '#ffd23f'); box(2, 2, 7, 3, 3, 8, '#ffd23f'); sky = ['#ffe9a8', '#fff7dc']; },
+    obby() { box(0, 0, 0, 11, 11, 0, '#ff5a1f'); const col = ['#2d5bff', '#ffd23f', '#18b46b', '#ff4b9a', '#8f5bff'];
+      for (let i = 0; i < 9; i++) box(1 + i, 10 - i, i + 1, 2 + i, 10 - i, i + 1, col[i % 5]); box(9, 0, 10, 11, 2, 10, '#ffffff'); box(10, 1, 11, 10, 1, 13, '#cfd6e6'); set(11, 1, 13, '#18b46b'); },
+    tycoon() { box(0, 0, 0, 13, 11, 0, '#5cc65a'); for (let z = 1; z <= 4; z++) for (let x = 2; x <= 8; x++) for (let y = 2; y <= 7; y++) if (x === 2 || x === 8 || y === 2 || y === 7) set(x, y, z, '#c9ced8');
+      box(2, 2, 5, 8, 7, 5, '#6b7487'); box(4, 7, 1, 5, 7, 3, '#3a4152'); box(9, 4, 1, 13, 4, 1, '#2b2f3a'); box(10, 3, 2, 10, 5, 3, '#8f5bff'); box(12, 3, 2, 12, 5, 3, '#8f5bff'); box(10, 9, 1, 12, 10, 2, '#18b46b'); tree(1, 10); },
+    simulator() { island('#5cc65a', '#9b6a3f', 13); const z = top(6, 6); box(5, 5, z, 7, 7, z + 2, '#3fe0ff'); set(6, 6, z + 3, '#a5f3ff');
+      [[3, 9], [9, 3], [10, 8], [2, 5]].forEach(([x, y]) => set(x, y, top(x, y), '#ffd23f')); tree(3, 3); tree(9, 10); sky = ['#ffb3e0', '#fff1d6']; },
+    terror() { island('#3b4a3a', '#2a2a33', 13); for (let z = 2; z <= 5; z++) for (let x = 3; x <= 9; x++) for (let y = 3; y <= 8; y++) if (x === 3 || x === 9 || y === 3 || y === 8) set(x, y, z, '#5a4a63');
+      box(3, 3, 6, 9, 8, 6, '#2a2a33'); box(4, 4, 7, 8, 7, 7, '#2a2a33'); set(9, 5, 4, '#ffd23f'); set(9, 7, 4, '#ffd23f'); set(6, 8, 4, '#ff3b3b'); box(1, 6, 2, 1, 6, 5, '#4a3b30'); sky = ['#120c24', '#3b2a5c']; stars = true; },
+    carreras() { box(0, 0, 0, 13, 13, 0, '#5cc65a'); for (let x = 1; x <= 12; x++) for (let y = 1; y <= 12; y++) if (x < 4 || x > 9 || y < 4 || y > 9) set(x, y, 0, '#3a3f4d');
+      box(3, 1, 1, 5, 2, 1, '#ff4b3e'); set(4, 1, 2, '#bfe6ff'); box(10, 6, 1, 11, 8, 1, '#2d5bff'); set(10, 7, 2, '#bfe6ff'); tree(6, 6); tree(8, 8); },
+    rpg() { box(0, 0, 0, 14, 14, 0, '#2f8cff'); box(2, 2, 1, 12, 12, 1, '#5cc65a'); for (let z = 2; z <= 4; z++) for (let x = 4; x <= 10; x++) for (let y = 4; y <= 10; y++) if (x === 4 || x === 10 || y === 4 || y === 10) set(x, y, z, '#b8bcc9');
+      [[3, 3], [10, 3], [3, 10], [10, 10]].forEach(([x, y]) => { box(x, y, 2, x + 1, y + 1, 7, '#9aa0b5'); box(x, y, 8, x + 1, y + 1, 8, '#ff4b3e'); }); box(6, 6, 2, 8, 8, 8, '#c9ced8'); set(7, 7, 9, '#ffd23f'); sky = ['#ffcf8a', '#ffeedb']; },
+    pirata() { box(-2, -2, 0, 14, 14, 0, '#2f8cff'); island('#f2d78b', '#c9a45c'); tree(4, 4, '#28b463'); tree(8, 7, '#28b463'); box(5, 8, top(5, 8), 6, 8, top(5, 8), '#8a5a34'); sky = ['#5ec8ff', '#d9f4ff']; },
+    neon() { island('#2b2f45', '#1b1e2e'); [[3, 4, 5], [6, 3, 7], [8, 6, 4], [4, 8, 6], [7, 9, 3]].forEach(([x, y, h], i) => { const z = top(x, y); box(x, y, z, x, y, z + h, '#3a3f5c'); set(x, y, z + h + 1, ['#ff3bd4', '#3fe0ff', '#ffd23f'][i % 3]); }); sky = ['#0b0820', '#311c57']; stars = true; },
+    volcan() { island('#4a4a52', '#2e2e34'); for (let z = 3; z < 8; z++) { const r = 8 - z; box(6 - r, 6 - r, z, 5 + r, 5 + r, z, '#3a3a40'); } box(5, 5, 7, 6, 6, 7, '#ff5a1f'); box(7, 8, 2, 7, 11, 2, '#ff5a1f'); sky = ['#ff8a4a', '#ffd7a8']; },
+    nieve() { island('#ffffff', '#c4d4e8'); tree(3, 4, '#1f6f4a'); tree(8, 3, '#1f6f4a'); tree(6, 8, '#1f6f4a'); box(9, 8, top(9, 8), 10, 9, top(9, 8), '#bfe6ff'); sky = ['#a8c8ff', '#eef4ff']; }
   };
+  scenes[name]();
 
-  function noise(x, y, s) {
-    return Math.sin(x * 0.21 + s) * 1.6 + Math.cos(y * 0.17 + s * 2) * 1.6 + Math.sin((x + y) * 0.09 + s * 3) * 2.2;
-  }
-
-  function createVoxelScene(container, opts) {
-    opts = opts || {};
-    if (!window.THREE) return null;
-    var cfg = SCENES[opts.scene] || SCENES.dia;
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var canvas = document.createElement('canvas');
-    canvas.className = 'bg-canvas';
-    container.appendChild(canvas);
-
-    var renderer;
-    try { renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true }); }
-    catch (e) { canvas.remove(); return null; }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-
-    var scene = new THREE.Scene();
-    scene.background = new THREE.Color(cfg.sky);
-    scene.fog = new THREE.Fog(cfg.fog, 30, 90);
-    var camera = new THREE.PerspectiveCamera(55, 1, 0.1, 200);
-
-    scene.add(new THREE.HemisphereLight(0xffffff, cfg.side, 0.75 * cfg.light));
-    var sun = new THREE.DirectionalLight(0xffffff, 0.8 * cfg.light);
-    sun.position.set(30, 60, 20); scene.add(sun);
-
-    // Terreno de bloques (InstancedMesh para que vaya fluido)
-    var N = 64, seed = opts.seed || 1.7;
-    var geo = new THREE.BoxGeometry(1, 1, 1);
-    var mat = new THREE.MeshLambertMaterial({ vertexColors: false });
-    var count = 0, cells = [];
-    for (var x = 0; x < N; x++) for (var z = 0; z < N; z++) {
-      var h = Math.round(noise(x, z, seed));
-      cells.push([x, z, h]); count += (h < 0 ? 1 : 2);
-    }
-    var mesh = new THREE.InstancedMesh(geo, mat, count);
-    var m4 = new THREE.Matrix4(), col = new THREE.Color(), i = 0;
-    cells.forEach(function (c) {
-      var px = c[0] - N / 2, pz = c[1] - N / 2, h = c[2];
-      if (h < 0) {
-        m4.makeTranslation(px, -0.6, pz); mesh.setMatrixAt(i, m4); mesh.setColorAt(i++, col.setHex(cfg.water));
-      } else {
-        m4.makeScale(1, h + 1, 1); m4.setPosition(px, (h + 1) / 2 - 1, pz);
-        mesh.setMatrixAt(i, m4); mesh.setColorAt(i++, col.setHex(cfg.side));
-        m4.makeTranslation(px, h + 0.01, pz); mesh.setMatrixAt(i, m4);
-        mesh.setColorAt(i++, col.setHex(h > 3 ? 0xf2f4f8 : cfg.top));
-      }
-    });
-    scene.add(mesh);
-
-    // Árboles y bloques flotantes de colores
-    var props = new THREE.Group(); scene.add(props);
-    var trunkM = new THREE.MeshLambertMaterial({ color: 0x8a5a34 });
-    var leafM = new THREE.MeshLambertMaterial({ color: opts.scene === 'noche' || opts.scene === 'neon' ? 0x1f6f4a : 0x2fa84f });
-    cells.forEach(function (c, k) {
-      if (c[2] >= 0 && c[2] <= 2 && (k * 7919) % 37 === 0) {
-        var t = new THREE.Mesh(new THREE.BoxGeometry(0.6, 2, 0.6), trunkM);
-        t.position.set(c[0] - N / 2, c[2] + 1.5, c[1] - N / 2); props.add(t);
-        var l = new THREE.Mesh(new THREE.BoxGeometry(2.4, 2, 2.4), leafM);
-        l.position.set(t.position.x, c[2] + 3.2, t.position.z); props.add(l);
-      }
-    });
-    var floaters = [];
-    for (var f = 0; f < 26; f++) {
-      var s = 0.6 + (f % 4) * 0.35;
-      var fm = new THREE.Mesh(new THREE.BoxGeometry(s, s, s), new THREE.MeshLambertMaterial({
-        color: cfg.accents[f % cfg.accents.length], emissive: cfg.accents[f % cfg.accents.length], emissiveIntensity: cfg.light < 0.8 ? 0.6 : 0.15 }));
-      var ang = f * 2.4, rad = 6 + (f * 3.7) % 24;
-      fm.position.set(Math.cos(ang) * rad, 6 + (f % 5) * 1.6, Math.sin(ang) * rad);
-      fm.userData = { y: fm.position.y, p: f };
-      floaters.push(fm); scene.add(fm);
-    }
-
-    var playing = !reduce, t0 = performance.now(), offset = opts.start || 0, raf = null, visible = true;
-    function resize() {
-      var w = container.clientWidth || 800, h = container.clientHeight || 500;
-      renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
-      if (!playing && camera.position.lengthSq()) renderer.render(scene, camera);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-    if ('ResizeObserver' in window) new ResizeObserver(resize).observe(container);
-    function frame(now) {
-      var t = offset + (playing ? (now - t0) / 1000 : 0);
-      var a = t * 0.06;
-      camera.position.set(Math.cos(a) * 26, 12 + Math.sin(t * 0.2) * 2, Math.sin(a) * 26);
-      camera.lookAt(0, 3, 0);
-      floaters.forEach(function (fm) {
-        fm.rotation.x = t * 0.5 + fm.userData.p; fm.rotation.y = t * 0.7 + fm.userData.p;
-        fm.position.y = fm.userData.y + Math.sin(t * 1.2 + fm.userData.p) * 0.6;
-      });
-      renderer.render(scene, camera);
-      if (playing && visible) raf = requestAnimationFrame(frame);
-    }
-    function play() { if (playing && raf) return; playing = true; t0 = performance.now(); raf = requestAnimationFrame(frame); }
-    function pause() { if (!playing) return; offset += (performance.now() - t0) / 1000; playing = false; cancelAnimationFrame(raf); raf = null; frame(performance.now()); }
-    function seek(sec) { offset = sec; t0 = performance.now(); if (!playing) frame(performance.now()); }
-
-    // Solo anima cuando está en pantalla
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        visible = es[0].isIntersecting;
-        if (visible && playing) { cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); }
-      }).observe(container);
-    }
-    frame(performance.now());
-    if (playing) raf = requestAnimationFrame(frame);
-
-    return { play: play, pause: pause, seek: seek, time: function () { return offset + (playing ? (performance.now() - t0) / 1000 : 0); } };
-  }
-
-  window.createVoxelScene = createVoxelScene;
-
-  // Arranque automático: <div class="bg-layer" data-scene="dia">[<video>]</div>
-  function boot() {
-    document.querySelectorAll('.bg-layer[data-scene]').forEach(function (el) {
-      var video = el.querySelector('video');
-      var api = createVoxelScene(el, { scene: el.dataset.scene, seed: +el.dataset.seed || 1.7 });
-      if (video) {
-        video.addEventListener('loadeddata', function () { video.classList.add('ready'); if (api) api.pause(); });
-        video.addEventListener('error', function () { video.remove(); }, true);
-      }
-    });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
-})();
-
-</script>
-<script>
-/* BloxLab Academia — lógica compartida: menú, pie, carrito, avisos y ventanas */
-(function () {
-  // ---------- Catálogo ----------
-  var COURSE = {
-    id: 'curso', kind: 'curso', name: 'Curso Roblox + IA: Creador Completo', short: 'Curso Roblox + IA',
-    price: 79, old: 129, img: IMG('curso-portada')
-  };
-  var PACKS = [
-    { id: 'obby', name: 'Pack Obby Extremo', genre: 'Obby', price: 19, img: IMG('pack-obby'), rating: 4.8, sales: 2140, level: 'Fácil',
-      maps: 12, scripts: 18, desc: '12 niveles de parkour listos para publicar, con checkpoints, temporizador y tabla de récords.',
-      items: ['12 mapas de obstáculos con dificultad creciente', 'Sistema de checkpoints y reaparición', 'Cronómetro y tabla de récords global', 'Tienda de efectos de salto (Game Pass)', '30 prompts de IA para crear niveles nuevos'] },
-    { id: 'tycoon', name: 'Pack Tycoon Factory', genre: 'Tycoon', price: 24, img: IMG('pack-tycoon'), rating: 4.9, sales: 1780, level: 'Medio', badge: 'Más vendido',
-      maps: 4, scripts: 26, desc: 'Fábrica con droppers, cintas, mejoras y guardado de datos. Cambia la temática en minutos con IA.',
-      items: ['Base de tycoon para 6 jugadores', 'Droppers, cintas y recolector de dinero', 'Botones de compra y árbol de mejoras', 'Guardado con DataStore', 'Prompts para cambiar la temática (pizzería, banco, espacio…)'] },
-    { id: 'simulator', name: 'Pack Simulator de Mascotas', genre: 'Simulator', price: 24, img: IMG('pack-simulator'), rating: 4.7, sales: 1530, level: 'Medio',
-      maps: 3, scripts: 31, desc: 'Recoge monedas, abre huevos y equipa mascotas. Incluye el sistema de rebirth.',
-      items: ['3 islas desbloqueables', 'Huevos con probabilidades configurables', 'Inventario y equipamiento de mascotas', 'Rebirths y multiplicadores', 'Interfaz completa para móvil y PC'] },
-    { id: 'terror', name: 'Pack Terror Nocturno', genre: 'Terror', price: 29, img: IMG('pack-terror'), rating: 4.8, sales: 980, level: 'Avanzado', badge: 'Nuevo',
-      maps: 2, scripts: 22, desc: 'Mansión encantada con un monstruo que persigue por pathfinding, linterna y sustos con sonido.',
-      items: ['Mansión de 3 plantas y bosque', 'Monstruo con IA de persecución (PathfindingService)', 'Linterna con batería y escondites', 'Sistema de sustos y sonido ambiental', 'Modo cooperativo de 4 jugadores'] },
-    { id: 'carreras', name: 'Pack Carreras Turbo', genre: 'Carreras', price: 22, img: IMG('pack-carreras'), rating: 4.6, sales: 870, level: 'Medio',
-      maps: 5, scripts: 20, desc: 'Coches con físicas, 5 circuitos, vueltas cronometradas y garaje para personalizar.',
-      items: ['5 circuitos con atajos', 'Chasis de coche con físicas ajustables', 'Contador de vueltas y posiciones', 'Garaje con colores y mejoras', 'Prompts para diseñar circuitos con IA'] },
-    { id: 'rpg', name: 'Pack Reino RPG', genre: 'RPG', price: 34, img: IMG('pack-rpg'), rating: 4.9, sales: 1210, level: 'Avanzado',
-      maps: 6, scripts: 44, desc: 'Castillo, misiones, combate con espadas, niveles y NPCs que hablan usando IA.',
-      items: ['Mundo con castillo, pueblo y mazmorra', 'Combate cuerpo a cuerpo y enemigos', 'Sistema de misiones y experiencia', 'NPCs con diálogos generados con IA', 'Inventario, tienda y equipamiento'] }
-  ];
-  var MEGA = { id: 'mega', kind: 'mega', name: 'Mega Bundle · los 6 packs', short: 'Mega Bundle', price: 99, img: IMG('pack-rpg') };
-  var ALL = [COURSE, MEGA].concat(PACKS);
-  function find(id) { for (var i = 0; i < ALL.length; i++) if (ALL[i].id === id) return ALL[i]; return null; }
-  var packsTotal = PACKS.reduce(function (a, p) { return a + p.price; }, 0);
-
-  window.BLOX = { COURSE: COURSE, PACKS: PACKS, MEGA: MEGA, find: find, packsTotal: packsTotal };
-
-  // ---------- Almacenamiento (con respaldo en memoria) ----------
-  var memory = {};
-  function load(key, def) { try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch (e) { return memory[key] || def; } }
-  function save(key, val) { memory[key] = val; try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
-  BLOX.load = load; BLOX.save = save;
-
-  // ---------- Menú y pie ----------
-  var PAGES = [['#inicio', 'Inicio', 'inicio'], ['#curso', 'El curso', 'curso'], ['#plantillas', 'Plantillas', 'plantillas'],
-               ['#galeria', 'Galería', 'galeria'], ['#contacto', 'Contacto', 'contacto']];
-  function chrome() {
-    var nav = document.getElementById('site-nav');
-    var current = nav ? nav.dataset.page : '';
-    if (nav) {
-      nav.className = 'site-nav';
-      nav.innerHTML = '<div class="wrap">' +
-        '<a class="logo" href="#inicio"><span class="logo-mark" aria-hidden="true"></span><span class="txt">BloxLab</span></a>' +
-        '<nav class="nav-links" id="navLinks" aria-label="Principal">' +
-        PAGES.map(function (p) { return '<a href="' + p[0] + '"' + (p[2] === current ? ' aria-current="page"' : '') + '>' + p[1] + '</a>'; }).join('') +
-        '</nav><div class="nav-actions">' +
-        '<button class="btn ghost small cart-btn" type="button" data-open-cart>Carrito <span class="cart-count" data-cart-count>0</span></button>' +
-        '<button class="btn ghost small menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="navLinks">Menú</button>' +
-        '</div></div>';
-      document.getElementById('menuBtn').addEventListener('click', function () {
-        var l = document.getElementById('navLinks'); var o = l.classList.toggle('open'); this.setAttribute('aria-expanded', o);
-      });
-    }
-    var foot = document.getElementById('site-footer');
-    if (foot) {
-      foot.className = 'site-footer';
-      foot.innerHTML = '<div class="wrap">' +
-        '<div><a class="logo" href="#inicio"><span class="logo-mark" aria-hidden="true"></span>BloxLab</a>' +
-        '<p>Academia online para crear juegos de Roblox con inteligencia artificial. Un curso completo y plantillas listas para publicar.</p></div>' +
-        '<div><h4>Aprende</h4><ul><li><a href="#curso">El curso</a></li><li><a href="#temario">Temario</a></li><li><a href="#faq">Preguntas</a></li></ul></div>' +
-        '<div><h4>Plantillas</h4><ul><li><a href="#plantillas">Todos los packs</a></li><li><a href="#mega">Mega Bundle</a></li><li><a href="#comparar">Comparar packs</a></li></ul></div>' +
-        '<div><h4>Comunidad</h4><ul><li><a href="#galeria">Juegos de alumnos</a></li><li><a href="#contacto">Contacto</a></li><li><a href="#colegios">Para colegios</a></li></ul></div>' +
-        '<div class="legal"><span>© 2026 BloxLab Academia · Proyecto de clase, la tienda no es real</span><span>No afiliado a Roblox Corporation</span></div>' +
-        '</div>';
-    }
-  }
-
-  // ---------- Aviso ----------
-  var toastEl, toastT;
-  function toast(msg) {
-    if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'toast'; toastEl.setAttribute('role', 'status'); toastEl.setAttribute('aria-live', 'polite'); document.body.appendChild(toastEl); }
-    toastEl.textContent = msg; toastEl.classList.add('show');
-    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove('show'); }, 2400);
-  }
-  BLOX.toast = toast;
-
-  // ---------- Ventana modal ----------
-  var lastFocus = null;
-  function openModal(html) {
-    closeModal();
-    lastFocus = document.activeElement;
-    var ov = document.createElement('div');
-    ov.className = 'overlay'; ov.id = 'overlay';
-    ov.innerHTML = '<div class="modal" role="dialog" aria-modal="true">' + html + '</div>';
-    ov.addEventListener('click', function (e) { if (e.target === ov || e.target.closest('[data-close]')) closeModal(); });
-    document.body.appendChild(ov);
-    var f = ov.querySelector('[data-close]'); if (f) f.focus();
-    return ov;
-  }
-  function closeModal() { var o = document.getElementById('overlay'); if (o) { o.remove(); if (lastFocus) lastFocus.focus(); } }
-  BLOX.openModal = openModal; BLOX.closeModal = closeModal;
-
-  // ---------- Carrito ----------
-  var cart = load('blox-cart', []).filter(find);
-  function packCount() { return cart.filter(function (id) { return find(id).genre; }).length; }
-  function discountRate() { var n = packCount(); return n >= 3 ? 0.2 : n === 2 ? 0.1 : 0; }
-  function totals() {
-    var sub = 0, packSub = 0;
-    cart.forEach(function (id) { var p = find(id); sub += p.price; if (p.genre) packSub += p.price; });
-    var disc = Math.round(packSub * discountRate() * 100) / 100;
-    return { sub: sub, disc: disc, total: sub - disc };
-  }
-  BLOX.discountRate = discountRate; BLOX.packCount = packCount;
-  function eur(n) { return (Math.round(n * 100) / 100).toLocaleString('es-ES', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }) + ' €'; }
-  BLOX.eur = eur;
-
-  function inCart(id) { return cart.indexOf(id) !== -1; }
-  BLOX.inCart = inCart;
-  function add(id) {
-    var p = find(id); if (!p || inCart(id)) return;
-    if (p.genre && inCart('mega')) { toast('Ese pack ya está incluido en tu Mega Bundle'); return; }
-    if (id === 'mega') {
-      var removed = cart.filter(function (x) { return find(x).genre; }).length;
-      cart = cart.filter(function (x) { return !find(x).genre; });
-      if (removed) toast('Mega Bundle añadido. Hemos quitado ' + removed + (removed === 1 ? ' pack suelto' : ' packs sueltos') + ' que ya incluye');
-      else toast('Mega Bundle añadido al carrito');
-    } else toast('«' + (p.short || p.name) + '» añadido al carrito');
-    cart.push(id); commit(true);
-  }
-  function remove(id) { cart = cart.filter(function (x) { return x !== id; }); commit(false); }
-  BLOX.add = add; BLOX.remove = remove;
-  function toggle(id) { if (inCart(id)) { remove(id); toast('Quitado del carrito'); } else add(id); }
-
-  var listeners = [];
-  BLOX.onCart = function (fn) { listeners.push(fn); fn(); };
-  function commit(bump) {
-    save('blox-cart', cart);
-    document.querySelectorAll('[data-cart-count]').forEach(function (el) {
-      el.textContent = cart.length;
-      if (bump) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
-    });
-    document.querySelectorAll('[data-add]').forEach(function (b) {
-      var id = b.dataset.add, on = inCart(id) || (find(id) && find(id).genre && inCart('mega'));
-      b.classList.toggle('added', on);
-      b.textContent = on ? (inCart('mega') && id !== 'mega' ? '✓ En el bundle' : '✓ En el carrito') : (b.dataset.label || 'Añadir');
-    });
-    renderDrawer();
-    listeners.forEach(function (fn) { fn(); });
-  }
-
-  BLOX.refresh = function () { commit(false); };
-
-  var drawer, scrim;
-  function buildDrawer() {
-    drawer = document.createElement('aside');
-    drawer.className = 'drawer'; drawer.setAttribute('aria-label', 'Carrito'); drawer.setAttribute('aria-hidden', 'true');
-    drawer.innerHTML = '<header><h3>Tu carrito</h3><button class="btn ghost small" type="button" data-close-cart>Cerrar</button></header>' +
-      '<div class="items" id="cartItems"></div><footer id="cartFoot"></footer>';
-    scrim = document.createElement('div'); scrim.className = 'scrim'; scrim.hidden = true;
-    document.body.appendChild(scrim); document.body.appendChild(drawer);
-    scrim.addEventListener('click', closeCart);
-    drawer.addEventListener('click', function (e) {
-      if (e.target.closest('[data-close-cart]')) closeCart();
-      var r = e.target.closest('[data-remove]'); if (r) remove(r.dataset.remove);
-      if (e.target.closest('#checkout')) {
-        document.getElementById('cartFoot').insertAdjacentHTML('beforeend',
-          '<div class="form-ok">Pedido de prueba creado. Es una web de clase, así que no se cobra nada.</div>');
-        e.target.closest('#checkout').disabled = true;
-      }
-    });
-  }
-  function renderDrawer() {
-    if (!drawer) return;
-    var items = document.getElementById('cartItems'), foot = document.getElementById('cartFoot');
-    if (!cart.length) {
-      items.innerHTML = '<div class="empty"><p>Tu carrito está vacío.</p><a class="btn small" href="#plantillas">Ver plantillas</a><a class="btn ghost small" href="#curso">Ver el curso</a></div>';
-      foot.innerHTML = ''; return;
-    }
-    items.innerHTML = cart.map(function (id) {
-      var p = find(id);
-      return '<div class="item"><img src="' + p.img + '" alt=""><div><b>' + p.name + '</b><span class="muted">' + eur(p.price) + '</span></div>' +
-        '<button type="button" data-remove="' + id + '" aria-label="Quitar ' + p.name + '">Quitar</button></div>';
-    }).join('');
-    var t = totals(), n = packCount(), hint = '';
-    if (n === 1) hint = 'Añade otro pack y ahorra un 10%';
-    else if (n === 2) hint = 'Con 3 packs el descuento sube al 20%';
-    else if (n >= 4 && !inCart('mega')) hint = 'Con el Mega Bundle te llevas los 6 packs por ' + eur(MEGA.price);
-    foot.innerHTML = '<div class="line"><span>Subtotal</span><span>' + eur(t.sub) + '</span></div>' +
-      (t.disc ? '<div class="line discount"><span>Descuento por packs (' + Math.round(discountRate() * 100) + '%)</span><span>-' + eur(t.disc) + '</span></div>' : '') +
-      (hint ? '<p class="muted" style="font-size:.9rem">' + hint + '</p>' : '') +
-      '<div class="line total"><span>Total</span><span>' + eur(t.total) + '</span></div>' +
-      '<button class="btn blue" type="button" id="checkout">Finalizar compra</button>';
-  }
-  function openCart() { drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false'); scrim.hidden = false; drawer.querySelector('[data-close-cart]').focus(); }
-  function closeCart() { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); scrim.hidden = true; }
-  BLOX.openCart = function () { openCart(); };
-
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('[data-add]'); if (a) { e.preventDefault(); toggle(a.dataset.add); return; }
-    if (e.target.closest('[data-open-cart]')) openCart();
+  // Dibujo isométrico: cada bloque son 3 caras (arriba, izquierda, derecha) con distinto brillo
+  const shade = (hex, f) => '#' + [1, 3, 5].map(i => Math.round(parseInt(hex.slice(i, i + 2), 16) * f).toString(16).padStart(2, '0')).join('');
+  let svg = '', minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+  [...cubes.values()].sort((a, b) => (a.x + a.y + a.z) - (b.x + b.y + b.z)).forEach(({ x, y, z, c }) => {
+    const X = (x - y) * 20, Y = (x + y) * 10 - z * 22;
+    minX = Math.min(minX, X - 20); maxX = Math.max(maxX, X + 20); minY = Math.min(minY, Y); maxY = Math.max(maxY, Y + 42);
+    const poly = (pts, col) => svg += `<polygon points="${pts}" fill="${col}"/>`;
+    if (!has(x, y + 1, z)) poly(`${X - 20},${Y + 10} ${X},${Y + 20} ${X},${Y + 42} ${X - 20},${Y + 32}`, shade(c, .78));
+    if (!has(x + 1, y, z)) poly(`${X + 20},${Y + 10} ${X},${Y + 20} ${X},${Y + 42} ${X + 20},${Y + 32}`, shade(c, .62));
+    if (!has(x, y, z + 1)) poly(`${X},${Y} ${X + 20},${Y + 10} ${X},${Y + 20} ${X - 20},${Y + 10}`, c);
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeModal(); if (drawer) closeCart(); } });
+  const s = Math.min(690 / (maxX - minX), 420 / (maxY - minY));
+  const tx = 400 - (minX + maxX) / 2 * s, ty = 250 - (minY + maxY) / 2 * s;
+  let extra = '';
+  if (stars) for (let i = 0; i < 40; i++) extra += `<rect x="${(i * 197) % 800}" y="${(i * 89) % 300}" width="3" height="3" fill="#fff"/>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><defs><linearGradient id="g" x2="0" y2="1"><stop offset="0" stop-color="${sky[0]}"/><stop offset="1" stop-color="${sky[1]}"/></linearGradient></defs>`
+    + (clear ? '' : `<rect width="800" height="500" fill="url(#g)"/>${extra}`) + `<g transform="translate(${tx} ${ty}) scale(${s})" stroke="rgba(0,0,0,.12)" stroke-width=".6">${svg}</g></svg>`;
+}
+// Pone la imagen en cada <img data-img="...">
+function fillImages(root = document) {
+  root.querySelectorAll('img[data-img]').forEach(img => { img.src = IMG(img.dataset.img); img.removeAttribute('data-img'); });
+}
 
-  // ---------- Contadores animados ----------
-  function counters() {
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    document.querySelectorAll('[data-count]').forEach(function (el) {
-      var end = +el.dataset.count, suf = el.dataset.suffix || '';
-      if (reduce) { el.textContent = end.toLocaleString('es-ES') + suf; return; }
-      var start = performance.now();
-      (function tick(now) {
-        var p = Math.min(1, (now - start) / 1500);
-        el.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))).toLocaleString('es-ES') + suf;
-        if (p < 1) requestAnimationFrame(tick);
-      })(start);
-    });
-  }
+/* =========================================================
+   3. CABECERAS: nubes y bloques flotantes (CSS, no 3D)
+   ========================================================= */
+document.querySelectorAll('.hero .sky').forEach(sky => {
+  const colors = ['#ff4b3e', '#ffd23f', '#18b46b', '#8f5bff', '#2d5bff'];
+  let html = '';
+  for (let i = 0; i < 4; i++) html += `<div class="cloud" style="top:${10 + i * 18}%;animation-duration:${40 + i * 12}s;animation-delay:-${i * 11}s"></div>`;
+  for (let i = 0; i < 6; i++) html += `<div class="cube" style="left:${52 + i * 8}%;top:${10 + (i * 37) % 70}%;background:${colors[i % 5]};animation-delay:-${i}s"></div>`;
+  sky.innerHTML = html;
+});
 
-  function init() { chrome(); buildDrawer(); commit(false); counters(); }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
-})();
+/* =========================================================
+   4. CARRITO
+   ========================================================= */
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem('cart')) || []; } catch (e) {}
+const packCount = () => cart.filter(id => find(id).genre).length;
+const discount = () => packCount() >= 3 ? .2 : packCount() === 2 ? .1 : 0;
 
-</script>
-<script>
-/* Demo del asistente IA: escribe un script de Luau según la idea elegida */
-(function () {
-  var out = document.getElementById('codeOut');
-  var promptLine = document.getElementById('promptLine');
-  if (!out) return;
-  var demos = [
-    { p: 'Haz que una puerta se abra cuando el jugador la toque',
-      code: [
-        ['c', '-- Script dentro de la Part "Puerta"\n'],
-        ['k', 'local '], ['', 'puerta = script.Parent\n'],
-        ['k', 'local '], ['', 'abierta = '], ['k', 'false'], ['', '\n\n'],
-        ['', 'puerta.Touched:'], ['f', 'Connect'], ['', '('], ['k', 'function'], ['', '(hit)\n'],
-        ['k', '  if '], ['', 'abierta '], ['k', 'then return end\n'],
-        ['k', '  if '], ['', 'hit.Parent:'], ['f', 'FindFirstChild'], ['', '('], ['s', '"Humanoid"'], ['', ') '], ['k', 'then\n'],
-        ['', '    abierta = '], ['k', 'true\n'],
-        ['', '    puerta.Transparency = 0.7\n'],
-        ['', '    puerta.CanCollide = '], ['k', 'false\n'],
-        ['', '    task.'], ['f', 'wait'], ['', '(3)\n'],
-        ['', '    puerta.Transparency, puerta.CanCollide = 0, '], ['k', 'true\n'],
-        ['', '    abierta = '], ['k', 'false\n'],
-        ['k', '  end\nend'], ['', ')']
-      ] },
-    { p: 'Crea una moneda que dé 10 puntos y desaparezca',
-      code: [
-        ['c', '-- Script dentro de la Part "Moneda"\n'],
-        ['k', 'local '], ['', 'moneda = script.Parent\n'],
-        ['k', 'local '], ['', 'Players = game:'], ['f', 'GetService'], ['', '('], ['s', '"Players"'], ['', ')\n\n'],
-        ['', 'moneda.Touched:'], ['f', 'Connect'], ['', '('], ['k', 'function'], ['', '(hit)\n'],
-        ['k', '  local '], ['', 'jugador = Players:'], ['f', 'GetPlayerFromCharacter'], ['', '(hit.Parent)\n'],
-        ['k', '  if '], ['', 'jugador '], ['k', 'then\n'],
-        ['k', '    local '], ['', 'puntos = jugador.leaderstats.Puntos\n'],
-        ['', '    puntos.Value += 10\n'],
-        ['', '    moneda:'], ['f', 'Destroy'], ['', '()\n'],
-        ['k', '  end\nend'], ['', ')']
-      ] },
-    { p: 'Haz un suelo de lava que elimine al jugador',
-      code: [
-        ['c', '-- Script dentro de la Part "Lava"\n'],
-        ['k', 'local '], ['', 'lava = script.Parent\n'],
-        ['', 'lava.BrickColor = BrickColor.'], ['f', 'new'], ['', '('], ['s', '"Really red"'], ['', ')\n'],
-        ['', 'lava.Material = Enum.Material.Neon\n\n'],
-        ['', 'lava.Touched:'], ['f', 'Connect'], ['', '('], ['k', 'function'], ['', '(hit)\n'],
-        ['k', '  local '], ['', 'humanoid = hit.Parent:'], ['f', 'FindFirstChild'], ['', '('], ['s', '"Humanoid"'], ['', ')\n'],
-        ['k', '  if '], ['', 'humanoid '], ['k', 'then\n'],
-        ['', '    humanoid.Health = 0\n'],
-        ['k', '  end\nend'], ['', ')']
-      ] }
-  ];
-  var timer = null;
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
-  function render(tokens, upto) {
-    var html = '', n = 0;
-    for (var i = 0; i < tokens.length && n < upto; i++) {
-      var t = tokens[i][1].slice(0, upto - n); n += t.length;
-      html += tokens[i][0] ? '<span class="' + tokens[i][0] + '">' + esc(t) + '</span>' : esc(t);
-    }
-    return html;
+function toggleCart(id) {
+  const p = find(id);
+  if (cart.includes(id)) { cart = cart.filter(x => x !== id); toast('Quitado del carrito'); }
+  else if (p.genre && cart.includes('mega')) { toast('Ese pack ya va en tu Mega Bundle'); return; }
+  else {
+    if (id === 'mega') cart = cart.filter(x => !find(x).genre); // el bundle sustituye a los packs sueltos
+    cart.push(id); toast('«' + p.name + '» añadido');
   }
-  function play(i) {
-    clearInterval(timer);
-    var d = demos[i];
-    promptLine.innerHTML = '<b>Tú:</b> ' + esc(d.p);
-    var total = d.code.reduce(function (a, t) { return a + t[1].length; }, 0);
-    if (reduce) { out.innerHTML = render(d.code, total); return; }
-    var c = 0;
-    timer = setInterval(function () {
-      c = Math.min(total, c + 3);
-      out.innerHTML = render(d.code, c) + '<span class="caret"></span>';
-      if (c >= total) clearInterval(timer);
-    }, 18);
-  }
-  document.querySelectorAll('.ai-demo .chip').forEach(function (b) {
-    b.addEventListener('click', function () {
-      document.querySelectorAll('.ai-demo .chip').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
-      play(+b.dataset.p);
-    });
+  updateCart();
+}
+function updateCart() {
+  try { localStorage.setItem('cart', JSON.stringify(cart)); } catch (e) {}
+  $('#count').textContent = cart.length;
+  // botones "Añadir"
+  document.querySelectorAll('[data-add]').forEach(b => {
+    const on = cart.includes(b.dataset.add) || (find(b.dataset.add).genre && cart.includes('mega'));
+    b.classList.toggle('on', on);
+    if (!b.dataset.label) b.dataset.label = b.textContent;
+    b.textContent = on ? '✓ En el carrito' : b.dataset.label;
   });
-  play(0);
-})();
+  // lista del carrito
+  $('#lines').innerHTML = cart.length ? cart.map(id => { const p = find(id);
+    return `<div class="line"><img src="${IMG(p.img || p.id)}" alt=""><div><b>${p.name}</b><div class="muted">${eur(p.price)}</div></div><button class="btn white sm" data-remove="${id}">Quitar</button></div>`; }).join('')
+    : '<p class="muted">Tu carrito está vacío.</p>';
+  const sub = cart.reduce((s, id) => s + find(id).price, 0);
+  const packsSub = cart.reduce((s, id) => s + (find(id).genre ? find(id).price : 0), 0);
+  const off = packsSub * discount();
+  $('#totals').innerHTML = cart.length ? `<div class="row"><span>Subtotal</span><span>${eur(sub)}</span></div>`
+    + (off ? `<div class="row" style="color:var(--green);font-weight:800"><span>Descuento packs (${discount() * 100}%)</span><span>-${eur(off)}</span></div>` : '')
+    + `<div class="row price"><span>Total</span><span>${eur(sub - off)}</span></div><button class="btn blue" id="pay">Finalizar compra</button>` : '';
+  // barra de descuento en Plantillas
+  const n = packCount(), mega = cart.includes('mega');
+  $('#meterBar').style.width = (mega ? 100 : Math.min(n, 3) / 3 * 100) + '%';
+  $('#meterText').textContent = mega ? 'Tienes el Mega Bundle: los 6 packs incluidos'
+    : n === 0 ? 'Combina packs y ahorra: 2 packs -10%, 3 o más -20%'
+    : n === 1 ? 'Llevas 1 pack. Añade otro y ahorra un 10%'
+    : n === 2 ? 'Llevas 2 packs (-10%). Con uno más, -20%' : `Llevas ${n} packs con un 20% de descuento`;
+}
 
+/* =========================================================
+   5. CONTENIDO QUE SE CREA DESDE LOS DATOS
+   ========================================================= */
+const packCard = p => `<article class="card item"><img class="pic" src="${IMG(p.id)}" alt="Vista previa del ${p.name}" data-view="${p.id}" style="cursor:zoom-in">
+  <div class="body"><span class="tag">${p.genre}</span><h3>${p.name}</h3><p class="muted">${p.desc}</p><div class="meta">${p.sales.toLocaleString('es-ES')} ventas</div>
+  <div class="foot"><div class="price">${eur(p.price)}</div><div class="chips"><button class="btn white sm" data-view="${p.id}">Detalles</button><button class="btn sm" data-add="${p.id}">Añadir</button></div></div></div></article>`;
 
-/* ---------- Página: inicio ---------- */
-(function () {
-  // Tira de capturas
-  var shots = ['juego-isla-pirata', 'pack-obby', 'juego-ciudad-neon', 'pack-simulator', 'juego-granja', 'pack-terror', 'juego-volcan', 'pack-carreras', 'juego-espacio', 'pack-rpg', 'juego-nieve'];
-  var html = shots.map(function (s) { return '<img src="' + IMG(s) + '" alt="" loading="lazy">'; }).join('');
-  document.getElementById('marquee').innerHTML = html + html;
+$('#topPacks').innerHTML = [...PACKS].sort((a, b) => b.sales - a.sales).slice(0, 3).map(packCard).join('');
+$('#collage').innerHTML = PACKS.map(p => `<img src="${IMG(p.id)}" alt="">`).join('');
 
-  // Packs destacados
-  var top = BLOX.PACKS.slice().sort(function (a, b) { return b.sales - a.sales; }).slice(0, 3);
-  document.getElementById('featured').innerHTML = top.map(packCard).join('');
-  function packCard(p) {
-    return '<article class="card pack"><a class="pic" href="#plantillas"><img src="' + p.img + '" alt="Vista previa del ' + p.name + '"><span class="tag genre">' + p.genre + '</span>' +
-      (p.badge ? '<span class="ribbon">' + p.badge + '</span>' : '') + '</a>' +
-      '<div class="body"><h3>' + p.name + '</h3><p class="muted">' + p.desc + '</p>' +
-      '<div class="meta"><span>★ ' + p.rating.toLocaleString('es-ES') + '</span><span>' + p.sales.toLocaleString('es-ES') + ' ventas</span><span>' + p.maps + ' mapas</span></div>' +
-      '<div class="foot"><div class="price">' + BLOX.eur(p.price) + '</div><button class="btn small" type="button" data-add="' + p.id + '">Añadir</button></div></div></article>';
-  }
+// Filtros con chips (sirve para plantillas y galería)
+function makeFilter(box, list, onPick) {
+  box.innerHTML = list.map((g, i) => `<button class="chip" aria-pressed="${i === 0}">${g}</button>`).join('');
+  box.onclick = e => { const b = e.target.closest('.chip'); if (!b) return;
+    box.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === b)); onPick(b.textContent); };
+  onPick(list[0]);
+}
+makeFilter($('#genres'), ['Todos', ...PACKS.map(p => p.genre)], g => {
+  $('#packs').innerHTML = PACKS.filter(p => g === 'Todos' || p.genre === g).map(packCard).join(''); updateCart();
+});
 
-  document.getElementById('comboBtn').addEventListener('click', function () {
-    BLOX.add('curso'); BLOX.add('mega'); BLOX.openCart();
-  });
-})();
+let liked = {};
+try { liked = JSON.parse(localStorage.getItem('likes')) || {}; } catch (e) {}
+makeFilter($('#gFilters'), ['Todos', 'Obby', 'Tycoon', 'Simulator', 'Terror', 'Carreras', 'RPG'], g => {
+  $('#gallery').innerHTML = GAMES.map((x, i) => g !== 'Todos' && x.g !== g ? '' :
+    `<article class="card item"><img class="pic" src="${IMG(x.img)}" alt="${x.t}" data-zoom="${i}" style="cursor:zoom-in">
+     <div class="body"><b>${x.t}</b><div class="foot"><span class="muted">${x.by} años · ${x.g}</span>
+     <button class="like" data-like="${i}" aria-pressed="${!!liked[i]}">♥ ${x.likes + (liked[i] ? 1 : 0)}</button></div></div></article>`).join('');
+});
 
-/* ---------- Página: curso ---------- */
-(function () {
-  // ---------- Temario ----------
-  var MODULES = [
-    { t: 'Bienvenida a Roblox Studio', l: [['Qué vas a crear en este curso', 8], ['Instalar Roblox Studio', 10], ['La interfaz paso a paso', 22], ['Tu primera Part', 15], ['Probar tu juego', 12]] },
-    { t: 'Construir mundos con Parts y Terrain', l: [['Mover, escalar y rotar', 18], ['Materiales y colores', 16], ['Terrain: montañas y agua', 25], ['Iluminación y cielo', 20], ['Modelos de la Toolbox', 14], ['Proyecto: tu isla', 35]] },
-    { t: 'Pensar con IA: prompts para juegos', l: [['Qué es la IA y qué no puede hacer', 14], ['Escribir un buen prompt', 22], ['De la idea al documento de diseño', 26], ['Pedir mecánicas paso a paso', 24], ['Revisar lo que te da la IA', 18], ['Proyecto: diseña tu juego', 30]] },
-    { t: 'Luau desde cero con tu copiloto IA', l: [['Variables y tipos', 20], ['Condiciones con if', 22], ['Bucles', 24], ['Funciones', 26], ['Eventos: Touched y Connect', 28], ['Leer y arreglar errores', 30], ['Proyecto: tu primer script', 32]] },
-    { t: 'Mecánicas: monedas, trampas y checkpoints', l: [['Puertas y botones', 22], ['Monedas y puntos', 26], ['Lava y trampas', 20], ['Checkpoints', 28], ['Plataformas que se mueven', 30], ['Leaderstats', 24], ['Proyecto: Obby de lava', 45]] },
-    { t: 'Interfaz y guardado de datos', l: [['ScreenGui y botones', 26], ['Tienda dentro del juego', 32], ['DataStore: guardar el progreso', 34], ['Interfaz para móvil', 22], ['Proyecto: Simulator de cristales', 50]] },
-    { t: 'Modelos, texturas y sonido con IA', l: [['Generar texturas con IA', 24], ['Modelos 3D desde un texto', 30], ['NPCs con PathfindingService', 36], ['Música y efectos', 18], ['Proyecto: Mansión de terror', 55]] },
-    { t: 'Publicar, probar y ganar Robux', l: [['Publicar tu experiencia', 18], ['Icono, miniaturas y descripción', 22], ['Game Passes y Developer Products', 30], ['Analíticas y mejoras', 24], ['Proyecto final revisado por un tutor', 40]] }
-  ];
-  var totalMin = 0, totalLessons = 0;
-  MODULES.forEach(function (m) { m.min = m.l.reduce(function (a, x) { return a + x[1]; }, 0); totalMin += m.min; totalLessons += m.l.length; });
-  function hm(min) { var h = Math.floor(min / 60), m = min % 60; return (h ? h + ' h ' : '') + (m ? m + ' min' : ''); }
-  document.getElementById('modules').innerHTML = MODULES.map(function (m, i) {
-    return '<details class="module"' + (i === 0 ? ' open' : '') + '><summary><span class="mn">' + (i + 1) + '</span><div><h3>' + m.t + '</h3><small>' + m.l.length + ' lecciones · ' + hm(m.min) + '</small></div><span class="tog" aria-hidden="true">+</span></summary>' +
-      '<ol>' + m.l.map(function (x) { return '<li>' + x[0] + '<span>' + x[1] + ' min</span></li>'; }).join('') + '</ol></details>';
-  }).join('');
-  var hours = Math.round(totalMin / 60);
-  document.getElementById('facts').innerHTML =
-    '<div><b>' + MODULES.length + '</b><span>módulos</span></div><div><b>' + totalLessons + '</b><span>lecciones</span></div>' +
-    '<div><b>' + hours + ' h</b><span>de vídeo</span></div><div><b>6</b><span>proyectos</span></div>';
+// Temario
+let lessons = 0;
+$('#modules').innerHTML = MODULES.map(([title, list, min], i) => { lessons += list.length;
+  return `<details class="acc"${i ? '' : ' open'}><summary><span class="num">${i + 1}</span>${title}<small class="muted">${list.length} lecciones · ${min} min</small></summary>
+  <ol class="in">${list.map(l => `<li>${l}</li>`).join('')}</ol></details>`; }).join('');
+$('#nLessons').textContent = lessons;
+$('#nHours').textContent = Math.round(MODULES.reduce((s, m) => s + m[2], 0) / 60) + ' h';
 
-  // Plan de estudio: vídeo + el doble de tiempo de práctica
-  var range = document.getElementById('hours');
-  function plan() {
-    var h = +range.value, weeks = Math.ceil((totalMin * 2 / 60) / h);
-    document.getElementById('hoursOut').textContent = h + ' h';
-    document.getElementById('plan').textContent = 'Con ' + h + (h === 1 ? ' hora' : ' horas') + ' a la semana (vídeo + práctica) terminarás en unas ' + weeks + ' semanas.';
-  }
-  range.addEventListener('input', plan); plan();
+// Cuenta atrás de la oferta (31 de octubre)
+const END = new Date(2026, 9, 31, 23, 59, 59);
+function tick() {
+  const s = Math.max(0, (END - Date.now()) / 1000);
+  $('#timer').innerHTML = [[s / 86400, 'días'], [s % 86400 / 3600, 'horas'], [s % 3600 / 60, 'min'], [s % 60, 'seg']]
+    .map(([v, l]) => `<span><b>${String(Math.floor(v)).padStart(2, '0')}</b>${l}</span>`).join('');
+}
+tick(); setInterval(tick, 1000);
 
-  // ---------- Cuenta atrás hasta el 31 de octubre ----------
-  var end = new Date(2026, 9, 31, 23, 59, 59).getTime();
-  function pad(n) { return (n < 10 ? '0' : '') + n; }
-  function tick() {
-    var d = Math.max(0, end - Date.now()) / 1000;
-    document.getElementById('cdD').textContent = pad(Math.floor(d / 86400));
-    document.getElementById('cdH').textContent = pad(Math.floor(d % 86400 / 3600));
-    document.getElementById('cdM').textContent = pad(Math.floor(d % 3600 / 60));
-    document.getElementById('cdS').textContent = pad(Math.floor(d % 60));
-  }
-  tick(); setInterval(tick, 1000);
+// Demo de IA: escribe el código poco a poco
+const DEMOS = {
+  'Puerta que se abre': `<span class="c">-- Dentro de la Part "Puerta"</span>\n<span class="k">local</span> puerta = script.Parent\n\npuerta.Touched:Connect(<span class="k">function</span>(hit)\n  <span class="k">if</span> hit.Parent:FindFirstChild(<span class="s">"Humanoid"</span>) <span class="k">then</span>\n    puerta.Transparency = 0.7\n    puerta.CanCollide = <span class="k">false</span>\n    task.wait(3)\n    puerta.Transparency = 0\n    puerta.CanCollide = <span class="k">true</span>\n  <span class="k">end</span>\n<span class="k">end</span>)`,
+  'Moneda con puntos': `<span class="c">-- Dentro de la Part "Moneda"</span>\n<span class="k">local</span> moneda = script.Parent\n\nmoneda.Touched:Connect(<span class="k">function</span>(hit)\n  <span class="k">local</span> jugador = game.Players:GetPlayerFromCharacter(hit.Parent)\n  <span class="k">if</span> jugador <span class="k">then</span>\n    jugador.leaderstats.Puntos.Value += 10\n    moneda:Destroy()\n  <span class="k">end</span>\n<span class="k">end</span>)`,
+  'Suelo de lava': `<span class="c">-- Dentro de la Part "Lava"</span>\n<span class="k">local</span> lava = script.Parent\nlava.Material = Enum.Material.Neon\n\nlava.Touched:Connect(<span class="k">function</span>(hit)\n  <span class="k">local</span> h = hit.Parent:FindFirstChild(<span class="s">"Humanoid"</span>)\n  <span class="k">if</span> h <span class="k">then</span> h.Health = 0 <span class="k">end</span>\n<span class="k">end</span>)`
+};
+let typing;
+makeFilter($('#demoChips'), Object.keys(DEMOS), name => {
+  clearInterval(typing);
+  const lines = DEMOS[name].split('\n'); let n = 0;
+  $('#code').innerHTML = '';
+  typing = setInterval(() => { n++; $('#code').innerHTML = lines.slice(0, n).join('\n'); if (n >= lines.length) clearInterval(typing); }, 120);
+});
 
-  // ---------- Tráiler ----------
-  var LEN = 36;
-  var CAPS = [[0, 'Esto es Roblox Studio con IA'], [6, 'Describe tu idea con palabras…'], [12, '…y la IA te escribe el script en Luau'],
-              [18, 'Construye mapas enteros en minutos'], [24, 'Prueba el juego con tus amigos'], [30, 'Y publícalo para millones de jugadores']];
-  var screen = document.getElementById('trailer');
-  var api = window.createVoxelScene ? createVoxelScene(screen, { scene: 'dia', seed: 7.3 }) : null;
-  if (api) { api.pause(); screen.querySelector('canvas').style.position = 'absolute'; screen.querySelector('canvas').style.inset = '0'; screen.querySelector('canvas').style.zIndex = '0'; }
-  ['caption', 'bigPlay'].forEach(function (id) { document.getElementById(id).style.zIndex = 1; });
-  screen.querySelector('.player-title').style.zIndex = 1;
-  var playing = false, pos = 0, last = 0, raf;
-  var seek = document.getElementById('seek'), clock = document.getElementById('clock'), btn = document.getElementById('playBtn'), big = document.getElementById('bigPlay'), cap = document.getElementById('caption');
-  function fmt(s) { s = Math.floor(s); return Math.floor(s / 60) + ':' + pad(s % 60); }
-  function show() {
-    seek.value = pos; clock.textContent = fmt(pos) + ' / ' + fmt(LEN);
-    var c = CAPS[0][1]; CAPS.forEach(function (x) { if (pos >= x[0]) c = x[1]; }); cap.textContent = c;
-  }
-  function loop(now) {
-    pos += (now - last) / 1000; last = now;
-    if (pos >= LEN) { pos = LEN; show(); stop(); return; }
-    show(); raf = requestAnimationFrame(loop);
-  }
-  function start() {
-    if (pos >= LEN) pos = 0;
-    playing = true; big.hidden = true; btn.textContent = '❚❚ Pausa';
-    if (api) { api.seek(pos * 2); api.play(); }
-    last = performance.now(); raf = requestAnimationFrame(loop);
-  }
-  function stop() { playing = false; big.hidden = false; btn.textContent = '▶ Reproducir'; cancelAnimationFrame(raf); if (api) api.pause(); }
-  btn.addEventListener('click', function () { playing ? stop() : start(); });
-  big.addEventListener('click', start);
-  seek.addEventListener('input', function () { pos = +seek.value; show(); if (api) api.seek(pos * 2); });
-  show();
-})();
+/* =========================================================
+   6. CLICS: añadir, detalles, galería, me gusta, carrito
+   ========================================================= */
+let toastTimer;
+function toast(msg) { $('#toast').textContent = msg; $('#toast').classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => $('#toast').classList.remove('show'), 2200); }
+function openModal(html) { $('#modal').innerHTML = html; $('#modal').showModal(); updateCart(); }
 
-/* ---------- Página: plantillas ---------- */
-(function () {
-  var PACKS = BLOX.PACKS, genre = 'Todos', sort = 'pop';
-  var genres = ['Todos'].concat(PACKS.map(function (p) { return p.genre; }));
-  var gEl = document.getElementById('genres');
-  gEl.innerHTML = genres.map(function (g) { return '<button class="chip" type="button" aria-pressed="' + (g === genre) + '">' + g + '</button>'; }).join('');
-  gEl.addEventListener('click', function (e) {
-    var b = e.target.closest('.chip'); if (!b) return;
-    genre = b.textContent;
-    gEl.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
-    draw();
-  });
-  document.getElementById('sort').addEventListener('change', function () { sort = this.value; draw(); });
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-add],[data-remove],[data-view],[data-zoom],[data-like],[data-close],#pay');
+  if (!t) return;
+  if (t.dataset.add) toggleCart(t.dataset.add);
+  if (t.dataset.remove) toggleCart(t.dataset.remove);
+  if (t.dataset.close !== undefined) $('#modal').close();
+  if (t.id === 'pay') t.outerHTML = '<p class="ok">Pedido de prueba: es una web de clase, no se cobra nada.</p>';
+  if (t.dataset.view) { const p = find(t.dataset.view);
+    openModal(`<img class="pic" src="${IMG(p.id)}" alt=""><div class="body"><span class="tag">${p.genre}</span><h2>${p.name}</h2><p class="muted">${p.desc}</p>
+      <ul class="ticks">${p.items.map(i => `<li>${i}</li>`).join('')}</ul>
+      <div class="foot"><div class="price">${eur(p.price)}</div><div class="chips"><button class="btn white" data-close>Cerrar</button><button class="btn blue" data-add="${p.id}">Añadir</button></div></div></div>`); }
+  if (t.dataset.zoom) { const g = GAMES[t.dataset.zoom];
+    openModal(`<img class="pic" src="${IMG(g.img)}" alt="${g.t}"><div class="body"><div class="foot"><div><h2>${g.t}</h2><p class="muted">${g.by} años · ${g.g}</p></div><button class="btn" data-close>Cerrar</button></div></div>`); }
+  if (t.dataset.like) { const i = t.dataset.like; liked[i] = !liked[i];
+    try { localStorage.setItem('likes', JSON.stringify(liked)); } catch (err) {}
+    t.setAttribute('aria-pressed', liked[i]); t.textContent = '♥ ' + (GAMES[i].likes + (liked[i] ? 1 : 0)); }
+});
+$('#modal').addEventListener('click', e => { if (e.target === $('#modal')) $('#modal').close(); }); // clic fuera = cerrar
+$('#cartBtn').onclick = () => $('#drawer').showModal();
+$('#closeCart').onclick = () => $('#drawer').close();
+$('#drawer').addEventListener('click', e => { if (e.target === $('#drawer')) $('#drawer').close(); });
+$('#combo').onclick = () => { if (!cart.includes('curso')) toggleCart('curso'); if (!cart.includes('mega')) toggleCart('mega'); $('#drawer').showModal(); };
+$('#menuBtn').onclick = () => $('#links').classList.toggle('open');
 
-  function card(p) {
-    return '<article class="card pack"><button class="pic" type="button" data-view="' + p.id + '" aria-label="Vista rápida del ' + p.name + '" style="border:0;border-bottom:3px solid var(--line);padding:0;width:100%">' +
-      '<img src="' + p.img + '" alt=""><span class="tag genre">' + p.genre + '</span>' + (p.badge ? '<span class="ribbon">' + p.badge + '</span>' : '') + '</button>' +
-      '<div class="body"><h3>' + p.name + '</h3><p class="muted">' + p.desc + '</p>' +
-      '<div class="meta"><span>★ ' + p.rating.toLocaleString('es-ES') + '</span><span>' + p.sales.toLocaleString('es-ES') + ' ventas</span><span>' + p.maps + ' mapas · ' + p.scripts + ' scripts</span></div>' +
-      '<div class="foot"><div class="price">' + BLOX.eur(p.price) + '</div><div style="display:flex;gap:8px"><button class="btn small ghost" type="button" data-view="' + p.id + '">Detalles</button><button class="btn small" type="button" data-add="' + p.id + '">Añadir</button></div></div></div></article>';
-  }
-  function draw() {
-    var list = PACKS.filter(function (p) { return genre === 'Todos' || p.genre === genre; });
-    list.sort(function (a, b) {
-      return sort === 'asc' ? a.price - b.price : sort === 'desc' ? b.price - a.price : sort === 'rating' ? b.rating - a.rating : b.sales - a.sales;
-    });
-    document.getElementById('grid').innerHTML = list.map(card).join('');
-    BLOX.refresh();
-  }
-  draw();
+// Formulario de contacto (no envía nada, solo comprueba)
+$('#form').onsubmit = e => {
+  e.preventDefault();
+  const name = $('#fName').value.trim(), mail = $('#fMail').value.trim();
+  const error = !name ? 'Escribe tu nombre.' : !/^\S+@\S+\.\S+$/.test(mail) ? 'Escribe un correo válido.' : $('#fMsg').value.trim().length < 10 ? 'Escribe un mensaje un poco más largo.' : '';
+  $('#fErr').hidden = !error; $('#fErr').textContent = error;
+  $('#fOk').hidden = !!error; $('#fOk').textContent = `¡Gracias, ${name}! Mensaje recibido (es una web de clase, no se envía).`;
+};
 
-  // Vista rápida
-  document.addEventListener('click', function (e) {
-    var v = e.target.closest('[data-view]'); if (!v) return;
-    var p = BLOX.find(v.dataset.view);
-    BLOX.openModal(
-      '<div class="pic"><img src="' + p.img + '" alt="Vista previa del ' + p.name + '"></div>' +
-      '<div class="body"><div><button class="btn small ghost close" type="button" data-close>Cerrar</button><span class="tag">' + p.genre + ' · ' + p.level + '</span></div>' +
-      '<h2>' + p.name + '</h2><p class="muted">' + p.desc + '</p>' +
-      '<div class="cols"><div><h3 style="margin-bottom:10px">Qué incluye</h3><ul class="ticks">' + p.items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul></div>' +
-      '<div style="display:grid;gap:12px;align-content:start"><div class="meta" style="display:flex;gap:12px;flex-wrap:wrap;font-weight:800"><span>★ ' + p.rating.toLocaleString('es-ES') + '</span><span>' + p.sales.toLocaleString('es-ES') + ' ventas</span></div>' +
-      '<p>' + p.maps + ' mapas · ' + p.scripts + ' scripts · guía en PDF</p><div class="price">' + BLOX.eur(p.price) + '</div>' +
-      '<button class="btn blue" type="button" data-add="' + p.id + '">Añadir</button></div></div></div>');
-    BLOX.refresh();
-  });
-
-  // Barra de descuento
-  BLOX.onCart(function () {
-    var n = BLOX.packCount(), mega = BLOX.inCart('mega');
-    var bar = document.getElementById('meterBar'), txt = document.getElementById('meterText');
-    bar.style.width = mega ? '100%' : Math.min(100, n / 3 * 100) + '%';
-    txt.textContent = mega ? 'Tienes el Mega Bundle: los 6 packs incluidos' :
-      n === 0 ? 'Combina packs y ahorra: 2 packs -10%, 3 o más -20%' :
-      n === 1 ? 'Llevas 1 pack. Añade otro y ahorra un 10%' :
-      n === 2 ? 'Llevas 2 packs con un 10% de descuento. Con uno más, un 20%' :
-      'Llevas ' + n + ' packs con un 20% de descuento';
-    ['st1', 'st2', 'st3'].forEach(function (id, i) { document.getElementById(id).classList.toggle('on', mega || n >= i + 1); });
-  });
-
-  document.getElementById('collage').innerHTML = PACKS.map(function (p) { return '<img src="' + p.img + '" alt="' + p.name + '">'; }).join('');
-  document.getElementById('compareBody').innerHTML = PACKS.map(function (p) {
-    return '<tr><td><b>' + p.name + '</b></td><td>' + p.level + '</td><td class="num">' + p.maps + '</td><td class="num">' + p.scripts + '</td><td class="num">★ ' + p.rating.toLocaleString('es-ES') + '</td><td class="num">' + BLOX.eur(p.price) + '</td></tr>';
-  }).join('');
-})();
-
-/* ---------- Página: galeria ---------- */
-(function () {
-  var GAMES = [
-    { t: 'Tesoro de la Isla Perdida', a: 'Hugo, 15', g: 'Simulator', img: 'juego-isla-pirata', v: 182400 },
-    { t: 'Neon Runner 2077', a: 'Sara, 16', g: 'Obby', img: 'juego-ciudad-neon', v: 96300 },
-    { t: 'Granja Feliz Tycoon', a: 'Iker, 13', g: 'Tycoon', img: 'juego-granja', v: 54800 },
-    { t: 'Escapa del Volcán', a: 'Noa, 14', g: 'Obby', img: 'juego-volcan', v: 77100 },
-    { t: 'Base Lunar Simulator', a: 'Leo, 17', g: 'Simulator', img: 'juego-espacio', v: 41200 },
-    { t: 'Aventura Polar', a: 'Martina, 12', g: 'RPG', img: 'juego-nieve', v: 23900 },
-    { t: 'Torre Arcoíris', a: 'Lucía, 14', g: 'Obby', img: 'pack-obby', v: 8230 },
-    { t: 'Mansión Maldita', a: 'Pablo, 16', g: 'Terror', img: 'pack-terror', v: 66700 },
-    { t: 'Pizza Factory', a: 'Marcos, 16', g: 'Tycoon', img: 'pack-tycoon', v: 21540 },
-    { t: 'Turbo Karts', a: 'Álex, 15', g: 'Carreras', img: 'pack-carreras', v: 38900 },
-    { t: 'El Reino Olvidado', a: 'Carla, 17', g: 'RPG', img: 'pack-rpg', v: 51300 },
-    { t: 'Cristal Clicker', a: 'Dani, 13', g: 'Simulator', img: 'pack-simulator', v: 17600 }
-  ];
-  var liked = BLOX.load('blox-likes', {});
-  var filter = 'Todos', shown = [];
-  var genres = ['Todos', 'Obby', 'Tycoon', 'Simulator', 'Terror', 'Carreras', 'RPG'];
-  var fEl = document.getElementById('filters');
-  fEl.innerHTML = genres.map(function (g) { return '<button class="chip" type="button" aria-pressed="' + (g === filter) + '">' + g + '</button>'; }).join('');
-  fEl.addEventListener('click', function (e) {
-    var b = e.target.closest('.chip'); if (!b) return;
-    filter = b.textContent; fEl.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); draw();
-  });
-  function likes(i) { return (GAMES[i].v / 20 | 0) + (liked[i] ? 1 : 0); }
-  function draw() {
-    shown = [];
-    document.getElementById('gallery').innerHTML = GAMES.map(function (g, i) {
-      if (filter !== 'Todos' && g.g !== filter) return '';
-      shown.push(i);
-      return '<article class="card shot"><img src="' + IMG(g.img) + '" alt="Captura de ' + g.t + '" data-open="' + i + '" tabindex="0" role="button" aria-label="Ampliar ' + g.t + '">' +
-        '<div class="body"><div style="min-width:0"><b>' + g.t + '</b><div class="muted" style="font-size:.88rem">' + g.a + ' años · ' + g.g + '</div><span class="plays">' + g.v.toLocaleString('es-ES') + ' visitas</span></div>' +
-        '<button class="like" type="button" data-like="' + i + '" aria-pressed="' + !!liked[i] + '">♥ ' + likes(i).toLocaleString('es-ES') + '</button></div></article>';
-    }).join('');
-  }
-  draw();
-
-  var cur = 0;
-  function lightbox(i) {
-    cur = i; var g = GAMES[i];
-    BLOX.openModal('<div class="pic"><img src="' + IMG(g.img) + '" alt="Captura de ' + g.t + '"></div>' +
-      '<div class="body"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">' +
-      '<div><h2 style="font-size:1.6rem">' + g.t + '</h2><p class="muted">' + g.a + ' años · ' + g.g + ' · ' + g.v.toLocaleString('es-ES') + ' visitas</p></div>' +
-      '<div style="display:flex;gap:8px"><button class="btn small ghost" type="button" data-nav="-1">← Anterior</button><button class="btn small ghost" type="button" data-nav="1">Siguiente →</button><button class="btn small" type="button" data-close>Cerrar</button></div></div></div>');
-  }
-  document.addEventListener('click', function (e) {
-    var o = e.target.closest('[data-open]'); if (o) { lightbox(+o.dataset.open); return; }
-    var n = e.target.closest('[data-nav]');
-    if (n) { var k = shown.indexOf(cur); lightbox(shown[(k + +n.dataset.nav + shown.length) % shown.length]); return; }
-    var l = e.target.closest('[data-like]');
-    if (l) { var i = +l.dataset.like; liked[i] = !liked[i]; BLOX.save('blox-likes', liked); l.setAttribute('aria-pressed', liked[i]); l.textContent = '♥ ' + likes(i).toLocaleString('es-ES'); }
-  });
-  document.addEventListener('keydown', function (e) {
-    var o = e.target.closest && e.target.closest('[data-open]');
-    if (o && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); lightbox(+o.dataset.open); }
-  });
-  var mq = window.matchMedia('(max-width: 760px)');
-  function stack() { document.getElementById('gFeatured').style.gridTemplateColumns = mq.matches ? '1fr' : '1.3fr 1fr'; }
-  stack(); mq.addEventListener ? mq.addEventListener('change', stack) : mq.addListener(stack);
-})();
-
-/* ---------- Página: contacto ---------- */
-(function () {
-  var topic = document.getElementById('cTopic'), students = document.getElementById('cStudents');
-  function fields() {
-    document.getElementById('gameField').hidden = topic.value !== 'juego';
-    document.getElementById('schoolField').hidden = topic.value !== 'colegio';
-    var n = Math.max(5, +students.value || 5), per = n >= 100 ? 19 : n >= 30 ? 25 : 32;
-    document.getElementById('schoolPrice').textContent = 'Precio orientativo: ' + per + ' € por alumno, ' + BLOX.eur(per * n) + ' en total.';
-  }
-  topic.addEventListener('change', fields); students.addEventListener('input', fields); fields();
-
-  var msg = document.getElementById('cMsg');
-  msg.addEventListener('input', function () { document.getElementById('cCount').textContent = msg.value.length + ' / 600'; });
-
-  document.getElementById('contact').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var name = document.getElementById('cName').value.trim(), mail = document.getElementById('cMail').value.trim();
-    var err = document.getElementById('cErr'), ok = document.getElementById('cOk');
-    var problem = !name ? 'Escribe tu nombre.' : !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail) ? 'Escribe un correo válido, por ejemplo nombre@correo.com.' : msg.value.trim().length < 10 ? 'Cuéntanos un poco más en el mensaje (mínimo 10 caracteres).' : '';
-    err.hidden = !problem; err.textContent = problem; ok.hidden = !!problem;
-    if (!problem) ok.textContent = '¡Gracias, ' + name + '! Mensaje recibido. Es una web de clase, así que no se envía a ningún sitio.';
-  });
-
-  document.querySelector('[data-copy]').addEventListener('click', function () {
-    var b = this, text = document.getElementById('mail').textContent;
-    function done() { b.textContent = 'Copiado'; setTimeout(function () { b.textContent = 'Copiar'; }, 1500); }
-    function fallback() { var r = document.createRange(); r.selectNodeContents(document.getElementById('mail')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
-    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
-  });
-  var mq = window.matchMedia('(max-width: 900px)');
-  function stack() { document.querySelector('#contacto .grid-2').style.gridTemplateColumns = mq.matches ? '1fr' : '1.4fr 1fr'; }
-  stack(); mq.addEventListener ? mq.addEventListener('change', stack) : mq.addListener(stack);
-})();
-
-
-/* ---------- Navegación entre páginas (#inicio, #curso…) ---------- */
-(function () {
-  function route() {
-    var h = decodeURIComponent(location.hash.slice(1)) || 'inicio';
-    var el = document.getElementById(h);
-    var page = el && (el.classList.contains('page') ? el : el.closest('.page'));
-    if (!page) { page = document.getElementById('inicio'); el = null; }
-    document.querySelectorAll('.page').forEach(function (p) { p.classList.toggle('active', p === page); });
-    document.title = page.dataset.title;
-    document.querySelectorAll('.nav-links a').forEach(function (a) {
-      if (a.getAttribute('href') === '#' + page.id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
-    });
-    var menu = document.getElementById('navLinks'); if (menu) menu.classList.remove('open');
-    if (BLOX.closeModal) BLOX.closeModal();
-    window.dispatchEvent(new Event('resize'));
-    if (el && el !== page) setTimeout(function () { el.scrollIntoView(); }, 0); else window.scrollTo(0, 0);
-  }
-  window.addEventListener('hashchange', route);
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', route); else route();
-})();
-
+/* =========================================================
+   7. NAVEGAR ENTRE PÁGINAS (#inicio, #curso...)
+   ========================================================= */
+function route() {
+  const target = document.getElementById(location.hash.slice(1)) || $('#inicio');
+  const page = target.closest('.page') || $('#inicio');
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p === page));
+  document.querySelectorAll('.links a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + page.id));
+  $('#links').classList.remove('open');
+  fillImages(page);
+  if (target !== page) target.scrollIntoView(); else window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', route);
+route();
+updateCart();
 </script>
 </body>
 </html>
